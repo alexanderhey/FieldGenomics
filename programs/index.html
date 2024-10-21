@@ -53,7 +53,7 @@
 <meta content="width=device-width, initial-scale=1" name="viewport">
 
 <meta property="og:url" content="/programs/">
-  <meta property="og:description" content="Software Install Linux on Windows If you’re using Windows, it’s highly recommended to set up a Linux environment (such as Ubuntu) through the Windows Subsystem for Linux (WSL). Follow these steps to get started:
+  <meta property="og:description" content="Software Windows (With Ubuntu) / Linux Mac Install Linux on Windows If you’re using Windows, it’s highly recommended to set up a Linux environment (such as Ubuntu) through the Windows Subsystem for Linux (WSL). Follow these steps to get started:
 Step 1: Open Command Prompt and Run WSL Installation wsl --install Follow the instructions to install the WSL virtual machine. You’ll be required to restart your computer during this process. After restarting, a terminal should appear. Set up a username and password for your new Ubuntu environment. If you need more details, visit an official website describing this process.
 Link: Install WSL">
   <meta property="og:locale" content="en_us">
@@ -61,7 +61,7 @@ Link: Install WSL">
 
 
   <meta name="twitter:card" content="summary">
-  <meta name="twitter:description" content="Software Install Linux on Windows If you’re using Windows, it’s highly recommended to set up a Linux environment (such as Ubuntu) through the Windows Subsystem for Linux (WSL). Follow these steps to get started:
+  <meta name="twitter:description" content="Software Windows (With Ubuntu) / Linux Mac Install Linux on Windows If you’re using Windows, it’s highly recommended to set up a Linux environment (such as Ubuntu) through the Windows Subsystem for Linux (WSL). Follow these steps to get started:
 Step 1: Open Command Prompt and Run WSL Installation wsl --install Follow the instructions to install the WSL virtual machine. You’ll be required to restart your computer during this process. After restarting, a terminal should appear. Set up a username and password for your new Ubuntu environment. If you need more details, visit an official website describing this process.
 Link: Install WSL">
 
@@ -662,6 +662,12 @@ table {
 
         
             <main class="mw-100" id="paige-content"><h1 id="software">Software<a aria-label="Link to this section" class="paige-header-link" href="#software"></a></h1>
+<div style="margin-bottom: 20px;">
+  <button id="windowsButton" class="tab-button" onclick="showSection('windows')">Windows (With Ubuntu) / Linux</button>
+  <button id="macButton" class="tab-button" onclick="showSection('mac')">Mac</button>
+</div>
+<!-- Windows (With Ubuntu) / Linux Installation Section -->
+<div id="windows" style="display:none;">
 <h2 id="install-linux-on-windows">Install Linux on Windows<a aria-label="Link to this section" class="paige-header-link" href="#install-linux-on-windows"></a></h2>
 <p>If you’re using Windows, it’s highly recommended to set up a Linux environment (such as Ubuntu) through the Windows Subsystem for Linux (WSL). Follow these steps to get started:</p>
 <h2 id="step-1-open-command-prompt-and-run-wsl-installation">Step 1: Open Command Prompt and Run WSL Installation<a aria-label="Link to this section" class="paige-header-link" href="#step-1-open-command-prompt-and-run-wsl-installation"></a></h2>
@@ -695,15 +701,33 @@ table {
 </span></span><span class="line"><span class="cl">sudo apt install samtools -y
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Install BLAST+</span>
-</span></span><span class="line"><span class="cl">sudo apt install ncbi-blast+ -y
-</span></span></code></pre></div><p>You are all set. Continue to the <a href="../workflows">Workflow page</a> to begin the Worked Example.</p>
+</span></span><span class="line"><span class="cl">sudo apt install ncbi-blast+ -y</span></span></code></pre></div>
+<p>You are all set. Continue to the <a href="../workflows">Workflow page</a> to begin the Worked Example.</p>
+</div>
+<!-- Mac Installation Section -->
+<div id="mac" style="display:none;">
+<h2 id="program-installation-on-a-mac-using-homebrew">Program Installation on a Mac using Homebrew<a aria-label="Link to this section" class="paige-header-link" href="#program-installation-on-a-mac-using-homebrew"></a></h2>
+<p>Visit <a href="https://brew.sh/">Homebrew</a> if you need additional help.</p>
+<p>Run the following command to install Homebrew:</p>
+<p><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/bin/bash -c <span class="s2">&#34;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></div>
+Once installed, Homebrew will ask you to export a path. Replace <code>&lt;username&gt;</code> with your actual username in the following commands:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;eval &#34;$(/opt/homebrew/bin/brew shellenv)&#34;&#39;</span> &gt;&gt; /Users/&lt;username&gt;/.zprofile
+</span></span><span class="line"><span class="cl"><span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>/opt/homebrew/bin/brew shellenv<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></div>
+You can now install <code>samtools</code>, <code>blastn</code>, and <code>bwa</code> using the following commands:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install samtools
+</span></span><span class="line"><span class="cl">brew install blast
+</span></span><span class="line"><span class="cl">brew install bwa</span></span></code></pre></div>
+To manually install BLAST, download the latest disk image (dmg) from the following link:</p>
+<p><a href="https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/">NCBI BLAST+ Download</a></p>
+<p>You are all set. Continue to the <a href="../workflows">Workflow page</a> to begin the Worked Example.</p>
+</div>
 <div style="margin-bottom: 20px;">
   <button id="realtimeButton" class="tab-button" onclick="showSection('realtime')">Real-time analysis programs</button>
   <button id="workedExampleButton" class="tab-button" onclick="showSection('workedExample')">Worked Example Programs</button>
 </div>
 <!-- Real-time Analysis Programs Section -->
 <div id="realtime" style="display:none;">
-<p><strong>Description</strong>: This are the programs you may need if you wish to replicate the analysis performed in the field on the data we generate with the Nanopore run. The participants do not need Dorado for the Worked Example they will be performing on their computers.</p>
+<p><strong>Description</strong>: These are the programs you may need if you wish to replicate the analysis performed in the field on the data we generate with the Nanopore run. The participants do not need Dorado for the Worked Example they will be performing on their computers.</p>
 <h2 id="dorado">Dorado<a aria-label="Link to this section" class="paige-header-link" href="#dorado"></a></h2>
 <p><strong>Description</strong>: Dorado is a basecalling and alignment tool used for processing Oxford Nanopore sequencing data.</p>
 <p><strong>Website</strong>: <a href="https://github.com/nanoporetech/dorado">Dorado GitHub</a></p>
@@ -727,8 +751,8 @@ table {
 </span></span><span class="line"><span class="cl">  wget https://github.com/nanoporetech/dorado/releases/download/v0.7.3/dorado-0.7.3-linux-x64.tar.gz
 </span></span><span class="line"><span class="cl">  tar -xvzf dorado-0.7.3-linux-x64.tar.gz
 </span></span><span class="line"><span class="cl">  <span class="nb">cd</span> dorado-0.7.3-linux-x64/bin/
-</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$PWD</span></span></span></code></pre></div>
-</div>
+</span></span><span class="line"><span class="cl">  <span class="nb">export</span> <span class="nv">PATH</span><span class="o">=</span><span class="nv">$PATH</span>:<span class="nv">$PWD</span>
+</span></span></code></pre></div></div>
 <!-- Program Information Section -->
 <div id="workedExample" style="display:none;">
 <p><strong>Description</strong>: These are the programs everyone will need to complete the example that workshop participants will walk through.</p>
@@ -777,13 +801,23 @@ table {
 </style>
 <script>
   function showSection(section) {
+    document.getElementById('windows').style.display = 'none';
+    document.getElementById('mac').style.display = 'none';
     document.getElementById('realtime').style.display = 'none';
     document.getElementById('workedExample').style.display = 'none';
 
+    document.getElementById('windowsButton').classList.remove('active');
+    document.getElementById('macButton').classList.remove('active');
     document.getElementById('realtimeButton').classList.remove('active');
     document.getElementById('workedExampleButton').classList.remove('active');
 
-    if(section === 'realtime') {
+    if(section === 'windows') {
+      document.getElementById('windows').style.display = 'block';
+      document.getElementById('windowsButton').classList.add('active');
+    } else if(section === 'mac') {
+      document.getElementById('mac').style.display = 'block';
+      document.getElementById('macButton').classList.add('active');
+    } else if(section === 'realtime') {
       document.getElementById('realtime').style.display = 'block';
       document.getElementById('realtimeButton').classList.add('active');
     } else if(section === 'workedExample') {
@@ -793,7 +827,7 @@ table {
   }
 
   // Set default section to display
-  showSection('workedExample');
+  showSection('windows');
 </script>
 </main>
         
