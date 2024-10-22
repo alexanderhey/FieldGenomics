@@ -2,203 +2,203 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>//localhost:4321/</loc>
+    <loc>/</loc>
     <lastmod>2024-10-22T00:00:00-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/workflows/</loc>
+    <loc>/workflows/</loc>
     <lastmod>2024-10-22T00:00:00-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/contactus/</loc>
+    <loc>/contactus/</loc>
     <lastmod>2024-10-02T00:00:00-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/getting-ready/</loc>
+    <loc>/getting-ready/</loc>
     <lastmod>2024-10-02T00:00:00-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/realtimeexample/</loc>
+    <loc>/realtimeexample/</loc>
     <lastmod>2024-09-24T00:00:00-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/slides/</loc>
+    <loc>/slides/</loc>
     <lastmod>2024-09-24T00:00:00-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/authors/author-demo/</loc>
+    <loc>/authors/author-demo/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/authors/</loc>
+    <loc>/authors/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/categories/</loc>
+    <loc>/categories/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/categories/customization/</loc>
+    <loc>/categories/customization/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/customizations/</loc>
+    <loc>/customizations/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/categories/paige/</loc>
+    <loc>/categories/paige/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/tags/sections/</loc>
+    <loc>/tags/sections/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/series/</loc>
+    <loc>/series/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/series/series-demo/</loc>
+    <loc>/series/series-demo/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/tags/show/</loc>
+    <loc>/tags/show/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/customizations/show/</loc>
+    <loc>/customizations/show/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/tags/singles/</loc>
+    <loc>/tags/singles/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/tags/</loc>
+    <loc>/tags/</loc>
     <lastmod>2023-09-18T21:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/tags/style/</loc>
+    <loc>/tags/style/</loc>
     <lastmod>2023-09-18T20:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/customizations/style/</loc>
+    <loc>/customizations/style/</loc>
     <lastmod>2023-09-18T20:21:05-07:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/post/2020-12-01-r-rmarkdown/</loc>
+    <loc>/post/2020-12-01-r-rmarkdown/</loc>
     <lastmod>2020-12-01T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/tags/plot/</loc>
+    <loc>/tags/plot/</loc>
     <lastmod>2020-12-01T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/post/</loc>
+    <loc>/post/</loc>
     <lastmod>2020-12-01T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/categories/r/</loc>
+    <loc>/categories/r/</loc>
     <lastmod>2020-12-01T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/tags/r-markdown/</loc>
+    <loc>/tags/r-markdown/</loc>
     <lastmod>2020-12-01T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/tags/regression/</loc>
+    <loc>/tags/regression/</loc>
     <lastmod>2020-12-01T21:13:14-05:00</lastmod>
   </url><url>
-    <loc>//localhost:4321/programs/</loc>
+    <loc>/programs/</loc>
   </url><url>
-    <loc>//localhost:4321/replicate-this-workshop/</loc>
+    <loc>/replicate-this-workshop/</loc>
   </url><url>
-    <loc>//localhost:4321/workedexample/</loc>
+    <loc>/workedexample/</loc>
   </url><url>
-    <loc>//localhost:4321/content/alert/</loc>
+    <loc>/content/alert/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/alerts/</loc>
+    <loc>/tags/alerts/</loc>
   </url><url>
-    <loc>//localhost:4321/layouts/cloud/apple/</loc>
+    <loc>/layouts/cloud/apple/</loc>
   </url><url>
-    <loc>//localhost:4321/layouts/cloud/banana/</loc>
+    <loc>/layouts/cloud/banana/</loc>
   </url><url>
-    <loc>//localhost:4321/layouts/cloud/cantaloupe/</loc>
+    <loc>/layouts/cloud/cantaloupe/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/cloud/</loc>
+    <loc>/tags/cloud/</loc>
   </url><url>
-    <loc>//localhost:4321/layouts/cloud/</loc>
+    <loc>/layouts/cloud/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/code/</loc>
+    <loc>/tags/code/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/code/</loc>
+    <loc>/shortcodes/code/</loc>
   </url><url>
-    <loc>//localhost:4321/categories/content/</loc>
+    <loc>/categories/content/</loc>
   </url><url>
-    <loc>//localhost:4321/content/</loc>
+    <loc>/content/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/css/</loc>
+    <loc>/tags/css/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/email/</loc>
+    <loc>/tags/email/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/email/</loc>
+    <loc>/shortcodes/email/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/emoji/</loc>
+    <loc>/tags/emoji/</loc>
   </url><url>
-    <loc>//localhost:4321/content/emoji-support/</loc>
+    <loc>/content/emoji-support/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/figure/</loc>
+    <loc>/shortcodes/figure/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/figures/</loc>
+    <loc>/tags/figures/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/gallery/</loc>
+    <loc>/tags/gallery/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/gallery/</loc>
+    <loc>/shortcodes/gallery/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/html/</loc>
+    <loc>/tags/html/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/icon/</loc>
+    <loc>/tags/icon/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/icon/</loc>
+    <loc>/shortcodes/icon/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/image/</loc>
+    <loc>/shortcodes/image/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/images/</loc>
+    <loc>/tags/images/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/katex/</loc>
+    <loc>/tags/katex/</loc>
   </url><url>
-    <loc>//localhost:4321/categories/layouts/</loc>
+    <loc>/categories/layouts/</loc>
   </url><url>
-    <loc>//localhost:4321/layouts/</loc>
+    <loc>/layouts/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/link/</loc>
+    <loc>/tags/link/</loc>
   </url><url>
-    <loc>//localhost:4321/content/link/</loc>
+    <loc>/content/link/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/markdown/</loc>
+    <loc>/tags/markdown/</loc>
   </url><url>
-    <loc>//localhost:4321/content/markdown-syntax/</loc>
+    <loc>/content/markdown-syntax/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/math/</loc>
+    <loc>/tags/math/</loc>
   </url><url>
-    <loc>//localhost:4321/content/math-typesetting/</loc>
+    <loc>/content/math-typesetting/</loc>
   </url><url>
-    <loc>//localhost:4321/content/placeholder-text/</loc>
+    <loc>/content/placeholder-text/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/privacy/</loc>
+    <loc>/tags/privacy/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/quotations/</loc>
+    <loc>/tags/quotations/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/quote/</loc>
+    <loc>/shortcodes/quote/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/request/</loc>
+    <loc>/tags/request/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/request/</loc>
+    <loc>/shortcodes/request/</loc>
   </url><url>
-    <loc>//localhost:4321/content/rich-content/</loc>
+    <loc>/content/rich-content/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/search/</loc>
+    <loc>/tags/search/</loc>
   </url><url>
-    <loc>//localhost:4321/layouts/search/</loc>
+    <loc>/layouts/search/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/shortcodes/</loc>
+    <loc>/tags/shortcodes/</loc>
   </url><url>
-    <loc>//localhost:4321/categories/shortcodes/</loc>
+    <loc>/categories/shortcodes/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/</loc>
+    <loc>/shortcodes/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/tabs/</loc>
+    <loc>/tags/tabs/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/tabs/</loc>
+    <loc>/shortcodes/tabs/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/text/</loc>
+    <loc>/tags/text/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/typesetting/</loc>
+    <loc>/tags/typesetting/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/videos/</loc>
+    <loc>/tags/videos/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/vimeo/</loc>
+    <loc>/tags/vimeo/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/vimeo/</loc>
+    <loc>/shortcodes/vimeo/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/web-font/</loc>
+    <loc>/tags/web-font/</loc>
   </url><url>
-    <loc>//localhost:4321/tags/youtube/</loc>
+    <loc>/tags/youtube/</loc>
   </url><url>
-    <loc>//localhost:4321/shortcodes/youtube/</loc>
+    <loc>/shortcodes/youtube/</loc>
   </url>
 </urlset>
