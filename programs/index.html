@@ -704,22 +704,25 @@ table {
 </span></span><span class="line"><span class="cl">sudo apt install ncbi-blast+ -y</span></span></code></pre></div>
 <p>You are all set. Continue to the <a href="../workflows">Workflow page</a> to begin the Worked Example.</p>
 </div>
-<!-- Mac Installation Section -->
-<div id="mac" style="display:none;">
-<h2 id="program-installation-on-a-mac-using-homebrew">Program Installation on a Mac using Homebrew<a aria-label="Link to this section" class="paige-header-link" href="#program-installation-on-a-mac-using-homebrew"></a></h2>
-<p>Visit <a href="https://brew.sh/">Homebrew</a> if you need additional help.</p>
-<p>Run the following command to install Homebrew:</p>
+<div id="mac" >
+</div>
+<h1 id="program-installation-on-a-mac-using-homebrew">Program Installation on a Mac using Homebrew<a aria-label="Link to this section" class="paige-header-link" href="#program-installation-on-a-mac-using-homebrew"></a></h1>
+<h2 id="step-1-install-homebrew">Step 1: Install Homebrew<a aria-label="Link to this section" class="paige-header-link" href="#step-1-install-homebrew"></a></h2>
+</div>
+Homebrew ("brew" for short) is an open-source software package management system that simplifies the installation of software on MacOS. For more details visit [Homebrew](https://brew.sh/). To install Homebrew on your Mac run the following command:
 <p><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">/bin/bash -c <span class="s2">&#34;</span><span class="k">$(</span>curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></div>
-Once installed, Homebrew will ask you to export a path. Replace <code>&lt;username&gt;</code> with your actual username in the following commands:
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;eval &#34;$(/opt/homebrew/bin/brew shellenv)&#34;&#39;</span> &gt;&gt; /Users/&lt;username&gt;/.zprofile
-</span></span><span class="line"><span class="cl"><span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>/opt/homebrew/bin/brew shellenv<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></div>
-You can now install <code>samtools</code>, <code>blastn</code>, and <code>bwa</code> using the following commands:
+Once installed, Homebrew will encourage you to &ldquo;add it to your path&rdquo;. Adding a program or executable to your path makes it easier to use, regardless of &ldquo;where&rdquo; you within your computer&rsquo;s file structure. Use the three lines of code output by Homebrew to accomplish this. Those commands will look similar to the lines of code below, but you will need to replace <USERNAME> with your actual username.
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">echo</span> <span class="s1">&#39;eval &#34;$(/opt/homebrew/bin/brew shellenv)&#34;&#39;</span> &gt;&gt; /Users/&lt;USERNAME&gt;/.zprofile
+</span></span><span class="line"><span class="cl"><span class="nb">eval</span> <span class="s2">&#34;</span><span class="k">$(</span>/opt/homebrew/bin/brew shellenv<span class="k">)</span><span class="s2">&#34;</span></span></span></code></pre></div></p>
+<h2 id="step-2-program-installation">Step 2: Program Installation<a aria-label="Link to this section" class="paige-header-link" href="#step-2-program-installation"></a></h2>
+</div>
+You can now install `samtools`, `blastn`, and `bwa` using the following commands:
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">brew install samtools
 </span></span><span class="line"><span class="cl">brew install blast
 </span></span><span class="line"><span class="cl">brew install bwa</span></span></code></pre></div>
-To manually install BLAST, download the latest disk image (dmg) from the following link:</p>
+To manually install BLAST, download the latest disk image (dmg) from the following link:
 <p><a href="https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/">NCBI BLAST+ Download</a></p>
-<p>You are all set. Continue to the <a href="../workflows">Workflow page</a> to begin the Worked Example.</p>
+<p>You are all set. We will begin the Worked Example in the field starting on the <a href="../workflows">Workflow page</a>.</p>
 </div>
 <div style="margin-bottom: 20px;">
   <button id="realtimeButton" class="tab-button" onclick="showSection('realtime')">Real-time analysis programs</button>
@@ -829,6 +832,15 @@ To manually install BLAST, download the latest disk image (dmg) from the followi
   // Set default section to display
   showSection('windows');
 </script>
+<hr>
+<h1 id="optional-programs">Optional Programs<a aria-label="Link to this section" class="paige-header-link" href="#optional-programs"></a></h1>
+<p>RStudio may be optionally used in the workshop for visualizatioin on the results of the worked example.</p>
+<h2 id="install-rstudio">Install RStudio<a aria-label="Link to this section" class="paige-header-link" href="#install-rstudio"></a></h2>
+<p>RStudio is a powerful IDE for R. Follow these steps to install it:</p>
+<ul>
+<li>Download RStudio from POSIT: <a href="https://posit.co/download/rstudio-desktop/">Download RStudio</a></li>
+<li>Follow the installation instructions for your operating system (Windows, macOS, Linux).</li>
+</ul>
 </main>
         
 

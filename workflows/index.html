@@ -54,14 +54,14 @@
 
 <meta property="og:url" content="/workflows/">
   <meta property="og:title" content="Nanopore workflow">
-  <meta property="og:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures Toggle DNA Extraction Toggle Library Preparation Toggle Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this process is to use Nanopore Adaptive Sampling for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in Kipp et al. (2023), where nanopore sequencing was used to study tick-borne bacterial pathogens.">
+  <meta property="og:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this process is to use Nanopore Adaptive Sampling for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in Kipp et al. (2023), where nanopore sequencing was used to study tick-borne bacterial pathogens.">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="website">
 
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Nanopore workflow">
-  <meta name="twitter:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures Toggle DNA Extraction Toggle Library Preparation Toggle Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this process is to use Nanopore Adaptive Sampling for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in Kipp et al. (2023), where nanopore sequencing was used to study tick-borne bacterial pathogens.">
+  <meta name="twitter:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this process is to use Nanopore Adaptive Sampling for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in Kipp et al. (2023), where nanopore sequencing was used to study tick-borne bacterial pathogens.">
 
 
 
@@ -691,9 +691,9 @@ table {
 <h2 id="molecular-procedures">Molecular Procedures<a aria-label="Link to this section" class="paige-header-link" href="#molecular-procedures"></a></h2>
 <!-- Buttons to toggle sections -->
 <div style="text-align: center; margin-bottom: 20px;">
-  <button onclick="toggleSection('dnaExtraction')">Toggle DNA Extraction</button>
-  <button onclick="toggleSection('libraryPrep')">Toggle Library Preparation</button>
-  <button onclick="toggleSection('flowCell')">Toggle Flow Cell Wash and Storage</button>
+  <button onclick="toggleSection('dnaExtraction')"> DNA Extraction</button>
+  <button onclick="toggleSection('libraryPrep')">Library Preparation</button>
+  <button onclick="toggleSection('flowCell')"> Flow Cell Wash and Storage</button>
 </div>
 <!-- Containers for the PDFs -->
 <div style="display: flex; flex-wrap: wrap; gap: 20px; justify-content: space-evenly;">
@@ -759,17 +759,17 @@ Windows users should use their Ubuntu terminal via WSL.</p>
 <p>Check your home directory
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">pwd</span>  <span class="c1"># type this command and hit enter</span></span></span></code></pre></div></p>
 <p>Home directory for Windows users via Ubuntu should be:
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="se">\\</span>wsl.localhost<span class="se">\U</span>buntu<span class="se">\h</span>ome<span class="se">\&lt;</span>USERNAME&gt;<span class="se">\F</span>ieldGenomics<span class="se">\d</span>ata_example  <span class="c1"># &lt;USERNAME&gt; was defined when installing Ubuntu</span></span></span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">\\<span class="n">wsl</span><span class="o">.</span><span class="n">localhost</span>\<span class="n">Ubuntu</span>\<span class="n">home</span>\<span class="o">&lt;</span><span class="n">USERNAME</span><span class="o">&gt;</span>\<span class="n">field_genomics</span>\<span class="n">data_example</span>  <span class="c1"># &lt;USERNAME&gt; was defined when installing Ubuntu</span></span></span></code></pre></div></p>
 <p>Create a directory for the example:
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir FieldGenomics</span></span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">mkdir</span> <span class="n">field_genomics</span></span></span></code></pre></div></p>
 <p>Navigate to the directory:
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~/FieldGenomics/</span></span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~/field_genomics/</span></span></code></pre></div></p>
 <p>Create new subdirectory to store example data:
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir data_example</span></span></code></pre></div></p>
 <p>Create another subdirectory to store results:
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir output_example</span></span></code></pre></div></p>
 <p>Create a third subdirectory to store a BLAST database:
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir blastdb</span></span></code></pre></div></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir blastdatabase</span></span></code></pre></div></p>
 <p>Inside the <code>data_example</code> directory, manually copy the provided files:</p>
 <ul>
 <li><code>Kipp_etal_depletion_reference.fasta</code></li>
@@ -778,7 +778,7 @@ Windows users should use their Ubuntu terminal via WSL.</p>
 </ul>
 <p><strong>Important</strong>: For Windows users, ensure that your computer does not suspend while running analyses.</p>
 <br>
-<h2 id="step-2-construct-the-fm-index-based-on-the-reference-genome">Step 2: Construct the FM-index Based on the Reference Genome<a aria-label="Link to this section" class="paige-header-link" href="#step-2-construct-the-fm-index-based-on-the-reference-genome"></a></h2>
+<h2 id="step-2-construct-the-index-based-on-the-reference-genome">Step 2: Construct the index Based on the Reference Genome<a aria-label="Link to this section" class="paige-header-link" href="#step-2-construct-the-index-based-on-the-reference-genome"></a></h2>
 <h3 id="variables">Variables:<a aria-label="Link to this section" class="paige-header-link" href="#variables"></a></h3>
 <ul>
 <li><strong>Reference Genome Path</strong>: <code>data_example/Kipp_etal_depletion_reference.fasta</code></li>
@@ -850,17 +850,17 @@ This command filters out the mapped reads, keeping only the unmapped sequences i
 <h2 id="step-5-set-up-blast-for-sequence-homology">Step 5: Set Up BLAST for Sequence Homology<a aria-label="Link to this section" class="paige-header-link" href="#step-5-set-up-blast-for-sequence-homology"></a></h2>
 <h3 id="variables-3">Variables:<a aria-label="Link to this section" class="paige-header-link" href="#variables-3"></a></h3>
 <ul>
-<li><strong>BLAST Database Path</strong>: <code>blastdb/Kipp_etal_enrichment_reference.fasta</code></li>
+<li><strong>BLAST Database Path</strong>: <code>blast_database/Kipp_etal_enrichment_reference.fasta</code></li>
 </ul>
 <h3 id="code-3">Code:<a aria-label="Link to this section" class="paige-header-link" href="#code-3"></a></h3>
 <h4 id="create-blast-database">Create BLAST Database:<a aria-label="Link to this section" class="paige-header-link" href="#create-blast-database"></a></h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">makeblastdb -in data_example/Kipp_etal_enrichment_reference.fasta -parse_seqids -blastdb_version <span class="m">5</span> -title <span class="s2">&#34;Kipp_etal_enrichment&#34;</span> -dbtype nucl -out blastdb/Kipp_etal_enrichment_reference</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">makeblastdb -in data_example/Kipp_etal_enrichment_reference.fasta -parse_seqids -blastdb_version <span class="m">5</span> -title <span class="s2">&#34;Kipp_etal_enrichment&#34;</span> -dbtype nucl -out blast_database/Kipp_etal_enrichment_reference</span></span></code></pre></div>
 <br>
 <p><strong>Description</strong>:
 This creates a BLAST database from the enrichment reference genome. The end goal is to identify non-host reads that match to a pathogen from a database we are creating in this step.</p>
 <br>
 <h4 id="run-blast-query">Run BLAST Query:<a aria-label="Link to this section" class="paige-header-link" href="#run-blast-query"></a></h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blastn -query output_example/Kipp_etal_unmapped_depletion.fasta -db blastdb/Kipp_etal_enrichment_reference -out output_example/Kipp_etal_blast_results.txt</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blastn -query output_example/Kipp_etal_unmapped_depletion.fasta -db blast_database/Kipp_etal_enrichment_reference -out output_example/Kipp_etal_blast_results.txt</span></span></code></pre></div>
 <br>
 <p><strong>Description</strong>:
 This step performs a BLAST search to compare the unmapped sequences against the BLAST database, producing a text file that gives us reads that matched to a pathogen databse.</p>
