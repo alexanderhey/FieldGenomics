@@ -54,14 +54,14 @@
 
 <meta property="og:url" content="/workflows/">
   <meta property="og:title" content="Nanopore workflow">
-  <meta property="og:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this process is to use Nanopore Adaptive Sampling for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in Kipp et al. (2023), where nanopore sequencing was used to study tick-borne bacterial pathogens.">
+  <meta property="og:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this portion of the workshop is to practice the basic bioinformatic workflow required for processing sequence data output from Nanopore Adaptive Sampling (NAS). Specifcally, we will map reads to reference sequences, filter out host sequences, and perform homology searchers against known pathogen sequences. This workflow uses publicly available data published by Kipp et al. (2023).">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="website">
 
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Nanopore workflow">
-  <meta name="twitter:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this process is to use Nanopore Adaptive Sampling for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in Kipp et al. (2023), where nanopore sequencing was used to study tick-borne bacterial pathogens.">
+  <meta name="twitter:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this portion of the workshop is to practice the basic bioinformatic workflow required for processing sequence data output from Nanopore Adaptive Sampling (NAS). Specifcally, we will map reads to reference sequences, filter out host sequences, and perform homology searchers against known pathogen sequences. This workflow uses publicly available data published by Kipp et al. (2023).">
 
 
 
@@ -750,17 +750,22 @@ pre code {
 <br>
 <hr>
 <h1 id="worked-example">Worked Example<a aria-label="Link to this section" class="paige-header-link" href="#worked-example"></a></h1>
-<p>The goal of this process is to use <strong>Nanopore Adaptive Sampling</strong> for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in <a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a>, where nanopore sequencing was used to study tick-borne bacterial pathogens.</p>
+<p>The goal of this portion of the workshop is to practice the basic bioinformatic workflow required for processing sequence data output from Nanopore Adaptive Sampling (NAS). Specifcally, we will map reads to reference sequences, filter out host sequences, and perform homology searchers against known pathogen sequences. This workflow uses publicly available data published by <a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a>.</p>
+<p><a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a> shows how NAS can be used to selectively sequence DNA from multiple bacterial tick-borne pathogens circulating in wild populations of the blacklegged tick vector, <i>Ixodes scapularis</i>. They test the consistency of pathogen recovery using NAS enrichment and depletion methods, compared to more traditional Illumina metagenomic seqeuncing methods. NAS enrichment and depletion methods successfully recovered 4 bacterial tick-borne pathogens (<i>Borellia burgdorferi</i>; <i>Borella miyamotoi</i>; <i>Anaplasma phagocytophilum</i>; and <i>Eherlichia muris</i>) from 8 female <i>I. scapularis</i> ticks, and even resulted in the sequencing of the entire bacterial pathogen genomes. Importantly, their NAS results were consistent with Illumina 16S microbiome data.</p>
+<p>For this exercise, we are only working with their depletion dataset, as that workflow is best aligned with the sequencing approach of this workshop.
+The goal of this process is to use <strong>Nanopore Adaptive Sampling</strong> for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in <a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a>, where nanopore sequencing was used to study tick-borne bacterial pathogens.</p>
+<p>Information on the programs used in this workshop can bve found in the <a href="../programs">Programs</a></p>
 <p>Before starting with Step 1, make sure you have downloaded Kipp&rsquo;s data as instructed in <a href="../getting-ready">Getting Ready</a>.</p>
 <br>
 <h2 id="step-1-getting-started">Step 1: Getting Started<a aria-label="Link to this section" class="paige-header-link" href="#step-1-getting-started"></a></h2>
-<p>Open your terminal
+<p>In this step, we are using basic Linux commands to establish our file/folder structure.
+Open your terminal
 Windows users should use their Ubuntu terminal via WSL.</p>
-<p>Check your home directory
+<p>Check your home directory (i.e., determine where your terminal window is located within the file structure of your computer)
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">pwd</span>  <span class="c1"># type this command and hit enter</span></span></span></code></pre></div></p>
-<p>Home directory for Windows users via Ubuntu should be:
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl">\\<span class="n">wsl</span><span class="o">.</span><span class="n">localhost</span>\<span class="n">Ubuntu</span>\<span class="n">home</span>\<span class="o">&lt;</span><span class="n">USERNAME</span><span class="o">&gt;</span>\<span class="n">field_genomics</span>\<span class="n">data_example</span>  <span class="c1"># &lt;USERNAME&gt; was defined when installing Ubuntu</span></span></span></code></pre></div></p>
-<p>Create a directory for the example:
+<p>Home directory for Windows users via Ubuntu should be:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="se">\\</span>wsl.localhost<span class="se">\U</span>buntu<span class="se">\h</span>ome<span class="se">\&lt;</span>USERNAME&gt;<span class="se">\f</span>ield_genomics<span class="se">\d</span>ata_example  <span class="c1"># &lt;USERNAME&gt; was defined when installing Ubuntu</span>
+</span></span></code></pre></div><p>Make a directory for the example:
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">mkdir</span> <span class="n">field_genomics</span></span></span></code></pre></div></p>
 <p>Navigate to the directory:
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> ~/field_genomics/</span></span></code></pre></div></p>
@@ -770,15 +775,27 @@ Windows users should use their Ubuntu terminal via WSL.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir output_example</span></span></code></pre></div></p>
 <p>Create a third subdirectory to store a BLAST database:
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir blastdatabase</span></span></code></pre></div></p>
-<p>Inside the <code>data_example</code> directory, manually copy the provided files:</p>
+<p>Copy or move the 3 data files from Kipp et al. 2023 into the data_example/ directory.
+This can be done in a File Manager or Finder window via drag-and-drop or via the command line.
+Ensure that the files downloaded are named as follows, as sometimes downloading/extracting zip files from the drive can change file names:</p>
 <ul>
-<li><code>Kipp_etal_depletion_reference.fasta</code></li>
-<li><code>SRR17281099.fasta.gz</code></li>
-<li><code>Kipp_etal_enrichment_reference.fasta</code></li>
+<li>
+<p><code>Kipp_etal_depletion_reference.fasta</code></p>
+</li>
+<li>
+<p><code>SRR17281099.fasta.gz</code></p>
+</li>
+<li>
+<p><code>Kipp_etal_enrichment_reference.fasta</code></p>
+<p>Example code for transferring these files from your Downloads folder to the data_example folder:</p>
+</li>
 </ul>
-<p><strong>Important</strong>: For Windows users, ensure that your computer does not suspend while running analyses.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> Downloads/
+</span></span><span class="line"><span class="cl">mv SRR17281099.fasta.gz &lt;YOUR_PATH&gt;/field_genomics/
+</span></span><span class="line"><span class="cl">mv Kipp_etal_* &lt;YOUR_PATH&gt;/field_genomics/
+</span></span></code></pre></div><p><strong>Important</strong>: For Windows users, ensure that your computer does not suspend while running analyses.</p>
 <br>
-<h2 id="step-2-construct-the-index-based-on-the-reference-genome">Step 2: Construct the index Based on the Reference Genome<a aria-label="Link to this section" class="paige-header-link" href="#step-2-construct-the-index-based-on-the-reference-genome"></a></h2>
+<h2 id="step-2-bwa">Step 2: BWA<a aria-label="Link to this section" class="paige-header-link" href="#step-2-bwa"></a></h2>
 <h3 id="variables">Variables:<a aria-label="Link to this section" class="paige-header-link" href="#variables"></a></h3>
 <ul>
 <li><strong>Reference Genome Path</strong>: <code>data_example/Kipp_etal_depletion_reference.fasta</code></li>
@@ -847,7 +864,7 @@ This step aligns the Nanopore sequencing reads to the reference genome.</p>
 <p><strong>Description</strong>:
 This command filters out the mapped reads, keeping only the unmapped sequences in a FASTA file. These sequences represent reads that are NOT the host (ex. bacterial DNA, fungal DNA, contamination).</p>
 <br>
-<h2 id="step-5-set-up-blast-for-sequence-homology">Step 5: Set Up BLAST for Sequence Homology<a aria-label="Link to this section" class="paige-header-link" href="#step-5-set-up-blast-for-sequence-homology"></a></h2>
+<h2 id="step-5-blast">Step 5: BLAST<a aria-label="Link to this section" class="paige-header-link" href="#step-5-blast"></a></h2>
 <h3 id="variables-3">Variables:<a aria-label="Link to this section" class="paige-header-link" href="#variables-3"></a></h3>
 <ul>
 <li><strong>BLAST Database Path</strong>: <code>blast_database/Kipp_etal_enrichment_reference.fasta</code></li>
@@ -864,13 +881,30 @@ This creates a BLAST database from the enrichment reference genome. The end goal
 <br>
 <p><strong>Description</strong>:
 This step performs a BLAST search to compare the unmapped sequences against the BLAST database, producing a text file that gives us reads that matched to a pathogen databse.</p>
-<br>
+<p>To parse the output of your blast search to make it more user-friendly, the following command outputs a tab-delimited file containing</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">blastn -query data_example/Kipp_etal_enrichment_reference.fasta -db blast_database/Kipp_etal_enrichment_reference -out jpc_results_v2.txt -outfmt <span class="s2">&#34;6 qseqid sseqid sseq&#34;</span><span class="sb">`</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># `6` specified tab-delimited format</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># `qseqid` returns teh query sequence ID</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># `sseqid` returns the subject sequence ID</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># `sseq` returns the subject sequence (i.e., what we want)</span>
+</span></span><span class="line"><span class="cl">	<span class="c1">#Options supplied to -outfmt (out format) can be customized to include alignment length,      percent identity, etc.</span>
+</span></span></code></pre></div><p>To convert those data to a fasta file:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk <span class="s1">&#39;{print &#34;&gt;&#34;REF$1_SUB$2&#34;\n&#34;$3}&#39;</span> results.txt &gt; subject_sequences.fasta
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#This command creates a fasta header (&gt;) that includes the reference/query ID (`$1` = first field = `qseqid``) followed by subject ID(2nd field = `$2` = `seqid`) </span>
+</span></span></code></pre></div><br>
 <hr>
 <h1 id="real-time-example">Real-Time Example<a aria-label="Link to this section" class="paige-header-link" href="#real-time-example"></a></h1>
 <p><strong>Description:</strong>
-This section contains all of the jobs for the analysis Alex will be performing with the Nanopore data generated during this workshop. It is not for the example the participants will be working through, but can be used as a resource for future nanopore analysis.</p>
-<br>
+This section contains all of the code we will use to analyze the Nanopore sequence data generated during the workshop.This is not part of the worked example.
+<br></p>
 <h2 id="1-basecalling">1. Basecalling<a aria-label="Link to this section" class="paige-header-link" href="#1-basecalling"></a></h2>
+<p><strong>Description:</strong>
+Basecalling is the process of determining the sequence of nucleotide bases from the raw data generated by the sequencer. For Nanopore sequencing, basecalling involves interpreting changes in electral current as single-stranded DNA (or RNA) passes through the nanopore. Current fluctuations correspond to different nucleotide bases which are decoded into <span style="color: #ff0000;">A&rsquo;s</span>,
+<span style="color: #00ff00;">G&rsquo;s</span>,
+<span style="color: #0000ff;">T&rsquo;s</span>,
+and <span style="color: #ffa500;">C&rsquo;s</span> by the dorado basecalling software.</p>
 <p><a href="../scripts/01_basecall.sh">Download 01_basecall.sh</a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for pod5 files</span>
@@ -886,12 +920,25 @@ This section contains all of the jobs for the analysis Alex will be performing w
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Loop through each barcode directory</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode01 barcode02 barcode03 barcode04 barcode05 barcode06 barcode07 barcode08 barcode09 barcode10 barcode11 barcode12 barcode13 barcode14 barcode15 barcode16 barcode17 barcode18 barcode19 barcode20 barcode21 barcode22 barcode23 barcode24
+</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># this loops over files named barcode01, barcode02, ..., barcode24</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The number of barcode files will depend on the number of individuals multiplexed and being analyzed simultaneously</span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">do</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$dorado</span> basecaller dna_r10.4.1_e8.2_400bps_fast@v5.0.0 <span class="s2">&#34;</span><span class="nv">$base_dir</span><span class="s2">/</span><span class="nv">$barcode</span><span class="s2">/&#34;</span> &gt; <span class="s2">&#34;</span><span class="nv">$output_dir</span><span class="s2">/</span><span class="si">${</span><span class="nv">barcode</span><span class="si">}</span><span class="s2">.bam&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
+<p>The names of Dorado models (i.e., here we use <a href="https://github.com/nanoporetech/dorado?tab=readme-ov-file#dna-models">dna_r10.4.1_e8.2_400bps_fast@5.0.0</a>) are systematically structured, each segment corresponding to a different aspect of the model, which include both chemistry and run settings. Below is a sample model name explained:
+<a href="https://github.com/nanoporetech/dorado?tab=readme-ov-file#dna-models">dna_r10.4.1_e8.2_400bps_hac@v5.0.0</a></p>
+<p>Analyte Type (dna): This denotes the type of analyte being sequenced. For DNA sequencing, it is represented as dna. If you are using a Direct RNA Sequencing Kit, this will be rna002 or rna004, depending on the kit.</p>
+<p>Pore Type (r10.4.1): This section corresponds to the type of flow cell used. For instance, FLO-MIN114/FLO-FLG114 is indicated by r10.4.1, while FLO-MIN106D/FLO-FLG001 is signified by r9.4.1.</p>
+<p>Chemistry Type (e8.2): This represents the chemistry type, which corresponds to the kit used for sequencing. For example, Kit 14 chemistry is denoted by e8.2 and Kit 10 or Kit 9 are denoted by e8.</p>
+<p>Translocation Speed (400bps): This parameter, selected at the run setup in MinKNOW, refers to the speed of translocation. Prior to starting your run, a prompt will ask if you prefer to run at 260 bps or 400 bps. The former yields more accurate results but provides less data. As of MinKNOW version 23.04, the 260 bps option has been deprecated.</p>
+<p>Model Type (hac): This represents the size of the model, where larger models yield more accurate basecalls but take more time. The three types of models are fast, hac, and sup. The fast model is the quickest, sup is the most accurate, and hac provides a balance between speed and accuracy. For most users, the hac model is recommended.</p>
+<p>Model Version Number (v5.0.0): This denotes the version of the model. Model updates are regularly released, and higher version numbers typically signify greater accuracy.
+For more details on decoding dorado model names see <a href="https://github.com/nanoporetech/dorado">here</a>.</p>
 <br>
 <h2 id="2-aligning-bam-files-to-a-reference-genome">2. Aligning BAM Files to a Reference Genome<a aria-label="Link to this section" class="paige-header-link" href="#2-aligning-bam-files-to-a-reference-genome"></a></h2>
+<p>This step aligns the Nanopore sequencing reads to the reference genome.</p>
 <p><a href="../scripts/02align.sh">Download 02align.sh</a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
