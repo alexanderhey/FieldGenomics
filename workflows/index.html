@@ -775,6 +775,8 @@ Windows users should use their Ubuntu terminal via WSL.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir output_example</span></span></code></pre></div></p>
 <p>Create a third subdirectory to store a BLAST database:
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir blastdatabase</span></span></code></pre></div></p>
+<p>Create a fourth subdirectory to summarize results from the example:
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">mkdir summary_example</span></span></code></pre></div></p>
 <p>Copy or move the 3 data files from Kipp et al. 2023 into the data_example/ directory.
 This can be done in a File Manager or Finder window via drag-and-drop or via the command line.
 Ensure that the files downloaded are named as follows, as sometimes downloading/extracting zip files from the drive can change file names:</p>
@@ -881,19 +883,44 @@ This creates a BLAST database from the enrichment reference genome. The end goal
 <br>
 <p><strong>Description</strong>:
 This step performs a BLAST search to compare the unmapped sequences against the BLAST database, producing a text file that gives us reads that matched to a pathogen databse.</p>
-<p>To parse the output of your blast search to make it more user-friendly, the following command outputs a tab-delimited file containing</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">blastn -query data_example/Kipp_etal_enrichment_reference.fasta -db blast_database/Kipp_etal_enrichment_reference -out jpc_results_v2.txt -outfmt <span class="s2">&#34;6 qseqid sseqid sseq&#34;</span><span class="sb">`</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># `6` specified tab-delimited format</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># `qseqid` returns teh query sequence ID</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># `sseqid` returns the subject sequence ID</span>
-</span></span><span class="line"><span class="cl">	<span class="c1"># `sseq` returns the subject sequence (i.e., what we want)</span>
+<br>
+<p>To make it easier to summarize blast results, another BLAST query can be run, this time, defining a different type of output <code>-outfmt 6</code>. The following command outputs a tab-delimited file that allows filtering results a little easier.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blastn -query output_example/Kipp_etal_unmapped_depletion.fasta -db blastdb/Kipp_etal_enrichment_reference -out output_example/Kipp_etal_blast_results_table.txt -outfmt <span class="m">6</span>
 </span></span><span class="line"><span class="cl">	<span class="c1">#Options supplied to -outfmt (out format) can be customized to include alignment length,      percent identity, etc.</span>
-</span></span></code></pre></div><p>To convert those data to a fasta file:</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk <span class="s1">&#39;{print &#34;&gt;&#34;REF$1_SUB$2&#34;\n&#34;$3}&#39;</span> results.txt &gt; subject_sequences.fasta
+</span></span></code></pre></div><br> 
+<h2 id="step-6-summarizing-result">Step 6: Summarizing result<a aria-label="Link to this section" class="paige-header-link" href="#step-6-summarizing-result"></a></h2>
+<h3 id="filtering-sequence-headers-and-query-subjects-based-on-high-percentage-matches">Filtering sequence headers and query subjects based on high percentage matches<a aria-label="Link to this section" class="paige-header-link" href="#filtering-sequence-headers-and-query-subjects-based-on-high-percentage-matches"></a></h3>
+<p>The following command filters the table-formated BLAST output to keep only the information for hits with a matching percentage <code>&gt;97%</code>:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk -F<span class="s1">&#39;\t&#39;</span> <span class="s1">&#39;$3 &gt; 97&#39;</span> output_example/Kipp_etal_blast_results_table.txt &gt; summary_example/Kipp_etal_high_hits.txt
+</span></span></code></pre></div><p>The next step is to get a list of &hellip;</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cut -f1 summary_example/Kipp_etal_high_hits.txt <span class="p">|</span> sort <span class="p">|</span> uniq &gt; summary_example/Kipp_etal_high_hit_headers.txt
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1">#This command creates a fasta header (&gt;) that includes the reference/query ID (`$1` = first field = `qseqid``) followed by subject ID(2nd field = `$2` = `seqid`) </span>
-</span></span></code></pre></div><br>
+</span></span><span class="line"><span class="cl">cut -f2 summary_example/Kipp_etal_high_hits.txt <span class="p">|</span> sort <span class="p">|</span> uniq &gt; summary_example/Kipp_etal_high_hit_subjects.txt
+</span></span></code></pre></div><h3 id="separating-sequences-with-high-percentage-matching">Separating sequences with high percentage matching<a aria-label="Link to this section" class="paige-header-link" href="#separating-sequences-with-high-percentage-matching"></a></h3>
+<p>Initial steps to list the headers of sequences needed:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">zcat data_example/SRR17281099.fasta.gz &gt; data_example/SRR17281099.fasta
+</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">samtools faidx data_example/SRR17281099.fasta
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">headers</span><span class="o">=</span><span class="sb">`</span>cat summary_example/Kipp_etal_high_hit_headers.txt<span class="sb">`</span>
+</span></span></code></pre></div><p>Obtaining the subset of high perecentage matching sequences from the whole set of sequences.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">samtools faidx data_example/SRR17281099.fasta <span class="nv">$headers</span> &gt; summary_example/Kipp_etal_high_hit_sequences.fasta
+</span></span></code></pre></div><h3 id="exploring-results-on-ncbi-blast-online">Exploring results on NCBI-BLAST (online)<a aria-label="Link to this section" class="paige-header-link" href="#exploring-results-on-ncbi-blast-online"></a></h3>
+<p>Here is a graph of the amount of hits per window. Clearly, one reference file is dominating, that being NC_021880.1_An_ph_str._JM</p>
+<img src="../results/hitsperwindows.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<p>Here is a snip of the data generated in Kipp_etal_blast_results_table.txt in Excel. It has been filtered for % Match above 97% and sorted by desencding read length. You can see that the longest high-quality hit was for the same reference as above, NC_021880.1_An_ph_str._JM.</p>
+<img src="../results/results2.png" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<p>Now, if we want to find that sequence, we can copy the Read name of the file, SRR17281099.418555, and use Ctrl + F on the Kipp_etal_high_hit_sequences.fasta to find the sequence of our read of interest:</p>
+<img src="../results/finder.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<p>Once we have this read of interest, we can use <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome">NCBI BLAST</a> to investigate of all uploaded nucleotide sequences, where does this one fall?</p>
+<p>First, we paste out sequence into the nucleotide box:
+<img src="../results/blast1.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/></p>
+<p>After searching, a results pane will show you results similar to what we had on the command line, but in a different format.</p>
+<img src="../results/blast2.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<p>NCBI has a neat feature where you can view how your sequence (highlighted in yellow) compares to other uploaded sequences:</p>
+<img src="../results/blast3.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<p>In this case, we can see that our longest read maps near-perfectly to a portion of an <a href="https://www.ncbi.nlm.nih.gov/nuccore/CP000235.1">Anaplasma phagocytophilum reference genome</a>, a Gram-negative bacterium that causes multiple diseases in cattle and sheep, as well as zoonoses like <a href="https://www.ncbi.nlm.nih.gov/books/NBK513341/">human granulocytic anaplasmosis.</a></p>
+<br>
 <hr>
 <h1 id="real-time-example">Real-Time Example<a aria-label="Link to this section" class="paige-header-link" href="#real-time-example"></a></h1>
 <p><strong>Description:</strong>
