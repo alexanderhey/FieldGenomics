@@ -791,12 +791,12 @@ Ensure that the files downloaded are named as follows, as sometimes downloading/
 </li>
 </ul>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="nb">cd</span> Downloads/
-</span></span><span class="line"><span class="cl">mv SRR17281099.fasta.gz &lt;YOUR_PATH&gt;/field_genomics/
+</span></span><span class="line"><span class="cl">mv SRR17281099.fasta.gz /&lt;YOUR_PATH&gt;/field_genomics/
 </span></span><span class="line"><span class="cl">mv Kipp_etal_* &lt;YOUR_PATH&gt;/field_genomics/
-</span></span></code></pre></div><p><strong>Important</strong>: For Windows users, ensure that your computer does not suspend while running analyses. You need to repace <code>&lt;YOUR_PATH&gt;</code> with the output of your <code>pwd</code> command from above.</p>
+</span></span></code></pre></div><p><strong>Note</strong>: For Windows users, ensure that your computer does not suspend while running analyses. You need to repace <code>&lt;YOUR_PATH&gt;</code> with the output of your <code>pwd</code> command from above.</p>
 <br>
 <h2 id="step-2-burrows-wheeler-aligner-bwa">Step 2: Burrows-Wheeler Aligner (BWA)<a aria-label="Link to this section" class="paige-header-link" href="#step-2-burrows-wheeler-aligner-bwa"></a></h2>
-<p>Burrows-Wheeler Alignment (BWA) is a software package that is used to align reads to a reference genome. First, we must index the reference genome. Indexing a reference genome is a process that speeds up sequence alignment by creating a data structure, allowing rapid matching of DNA sequences (reads) to the reference genome. This is how to index a reference genome:</p>
+<p><a href="https://github.com/lh3/bwa">Burrows-Wheeler Alignment</a> (BWA) is a software package that is used to align reads to a reference genome. First, we must index the reference genome. Indexing a reference genome is a process that speeds up sequence alignment by creating a data structure, allowing rapid matching of DNA sequences (reads) to the reference genome. This is how to index a reference genome:</p>
 <h3 id="variables">Variables:<a aria-label="Link to this section" class="paige-header-link" href="#variables"></a></h3>
 <ul>
 <li><strong>Reference Genome Path</strong>: <code>data_example/Kipp_etal_depletion_reference.fasta</code></li>
@@ -804,8 +804,6 @@ Ensure that the files downloaded are named as follows, as sometimes downloading/
 <h3 id="code">Code:<a aria-label="Link to this section" class="paige-header-link" href="#code"></a></h3>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">bwa index data_example/Kipp_etal_depletion_reference.fasta</span></span></code></pre></div>
 <br>
-<p><strong>Description</strong>:
-<strong>What Does Indexing a Reference Genome Do?</strong></p>
 <ol>
 <li>
 <p><strong>Input: Reference Genome</strong></p>
@@ -822,22 +820,17 @@ GCTAGCTAGCTAGCTGATCGTACG
 <li>
 <p><strong>Indexing with BWA</strong></p>
 <ul>
-<li>BWA generates auxiliary files, such as suffix arrays or FM-indexes, that make the search process more efficient.</li>
+<li>BWA generates auxiliary files (<code>.amb</code>,<code>.ann</code>,<code>.bwt</code>,<code>.pac</code>,<code>.sa</code>) such as suffix arrays or FM-indexes, that make the search process more efficient.</li>
 <li>These files allow the alignment tool to quickly locate where short DNA sequences (reads) map to the genome.</li>
-</ul>
-</li>
-<li>
-<p><strong>Search Using Indexed Genome</strong></p>
-<ul>
-<li>When aligning reads, BWA uses the indexed reference genome to find matching sequences quickly.</li>
-<li>Example:<br>
-Input read: <code>AGCTAGCTAC</code><br>
-Match found: <code>chr1:5-14</code></li>
 </ul>
 </li>
 </ol>
 <br>
-<h2 id="step-3-align-nanopore-sequences-to-the-reference-genome">Step 3: Align Nanopore Sequences to the Reference Genome<a aria-label="Link to this section" class="paige-header-link" href="#step-3-align-nanopore-sequences-to-the-reference-genome"></a></h2>
+<h2 id="step-3-align-nanopore-reads-to-a-reference-genome">Step 3: Align Nanopore Reads to a Reference Genome<a aria-label="Link to this section" class="paige-header-link" href="#step-3-align-nanopore-reads-to-a-reference-genome"></a></h2>
+<p><strong>Description</strong>:
+This step aligns the Nanopore sequencing reads to the reference genome. BWA-MEM is the algorithm in BWA that is best for aligning long reads (70bp or more).  <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">SAM</a> files (the ouput file format of this step) are a formatted, plain-text file that contains aligment information for sequences mapped to a reference. SAM files can also contain unmapped sequences.</p>
+<div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;"> <img src="../procedures/mapping.png" alt="Alignment Process" style="max-width: 100%; height: auto;"/> </div>
+<p>Photo credit: <a href="https://usegalaxy.org/">Galaxy</a></p>
 <h3 id="variables-1">Variables:<a aria-label="Link to this section" class="paige-header-link" href="#variables-1"></a></h3>
 <ul>
 <li><strong>Reference Genome Path</strong>: <code>data_example/Kipp_etal_depletion_reference.fasta</code></li>
@@ -845,63 +838,133 @@ Match found: <code>chr1:5-14</code></li>
 <li><strong>Output SAM File Path</strong>: <code>output_example/Kipp_etal_alig_depletion.sam</code></li>
 </ul>
 <h3 id="code-1">Code:<a aria-label="Link to this section" class="paige-header-link" href="#code-1"></a></h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">bwa mem -x ont2d data_example/Kipp_etal_depletion_reference.fasta data_example/SRR17281099.fasta.gz &gt; output_example/Kipp_etal_alig_depletion.sam</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#template command for nanopore reads: bwa mem -x ont2d &lt;reference_genome.fasta&gt; &lt;raw_reads.fasta.gz&gt; &lt;output.sam&gt;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">bwa mem -x ont2d data_example/Kipp_etal_depletion_reference.fasta data_example/SRR17281099.fasta.gz &gt; output_example/Kipp_etal_alig_depletion.sam
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># -x is a flag to specify specialized alignment stratagies, in this case, ont2d = Oxford Nanopore Reads</span></span></span></code></pre></div>
 <br>
+<h2 id="step-4-remove-host-sequence-data">Step 4: Remove Host Sequence Data<a aria-label="Link to this section" class="paige-header-link" href="#step-4-remove-host-sequence-data"></a></h2>
 <p><strong>Description</strong>:
-This step aligns the Nanopore sequencing reads to the reference genome. BWA-MEM is the algorithm in BWA that is best for aligning long reads (70bp or more).  <a href="https://samtools.github.io/hts-specs/SAMv1.pdf">SAM</a> files (the output file format) are a type of text file format that contains the alignment information of various sequences that are mapped against reference sequences. These files can also contain unmapped sequences.</p>
-<div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; text-align: center;"> <img src="../procedures/mapping.png" alt="Alignment Process" style="max-width: 100%; height: auto;"/> </div>
-<p>credit <a href="https://usegalaxy.org/">Galaxy</a></p>
-<br>
-<br>
-<h2 id="step-4-filter-out-host-aligned-sequences">Step 4: Filter Out Host-Aligned Sequences<a aria-label="Link to this section" class="paige-header-link" href="#step-4-filter-out-host-aligned-sequences"></a></h2>
-<p><strong>Description</strong>:
-<a href="https://www.htslib.org/">samtools</a> is a suite of programs used for interacting with high-throughput sequencing data. It consists of samtools, BCFtools, and HTSlib.</p>
+Here, we remove reads that mapped to the host genome, retaining only unmapped sequences in a separate fasta file. These sequences represent reads that are NOT the host (e.g., bacterial DNA, fungal DNA, contamination, etc.).</p>
 <h3 id="variables-2">Variables:<a aria-label="Link to this section" class="paige-header-link" href="#variables-2"></a></h3>
 <ul>
 <li><strong>Input SAM File Path</strong>: <code>output_example/Kipp_etal_alig_depletion.sam</code></li>
 <li><strong>Output Unmapped Reads Path</strong>: <code>output_example/Kipp_etal_unmapped_depletion.fasta</code></li>
 </ul>
 <h3 id="code-2">Code:<a aria-label="Link to this section" class="paige-header-link" href="#code-2"></a></h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">samtools fasta -f <span class="m">4</span> output_example/Kipp_etal_alig_depletion.sam &gt; output_example/Kipp_etal_unmapped_depletion.fasta</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">samtools fasta -f <span class="m">4</span> output_example/Kipp_etal_alig_depletion.sam &gt; output_example/Kipp_etal_unmapped_depletion.fasta
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#samtools -f is a flag that means &#34;flag.&#34; In this case, we specify 4, which translates to filter that fasta file to keep only unmapped sequences</span></span></span></code></pre></div>
 <br>
 <p><strong>Description</strong>:
-This command filters out the mapped reads, keeping only the unmapped sequences in a FASTA file. These sequences represent reads that are NOT the host (ex. bacterial DNA, fungal DNA, contamination).</p>
+<a href="https://www.htslib.org/">samtools</a> is a suite of programs used for interacting with high-throughput sequencing data. It consists of samtools, BCFtools, and HTSlib.</p>
 <br>
-<h2 id="step-5-blast">Step 5: BLAST<a aria-label="Link to this section" class="paige-header-link" href="#step-5-blast"></a></h2>
-<h3 id="variables-3">Variables:<a aria-label="Link to this section" class="paige-header-link" href="#variables-3"></a></h3>
-<ul>
-<li><strong>BLAST Database Path</strong>: <code>blast_database/Kipp_etal_enrichment_reference.fasta</code></li>
-</ul>
+<h2 id="step-5-basic-local-alignment-search-tool-blast">Step 5: Basic Local Alignment Search Tool (BLAST)<a aria-label="Link to this section" class="paige-header-link" href="#step-5-basic-local-alignment-search-tool-blast"></a></h2>
+<p><strong>Description</strong>:
+Next, we want to build a local database of tick-borne pathogen sequences. We will then compare our unaligned Nanopore reads to that database of reference pathogen sequences and use the percent identity (or percent similarity) to determine which pathogens are present in the Nanopore sequence data. We will use National Center for Biotechnology Information&rsquo;s (NCBI) BLAST (Basic Local Alignment Search Tool) tool to both (1) build the local database of know pathogens and (2) compare our data to it. The pathogen sequences used to build the reference database can be mined from GenBank/SRA, DDBJ, EuPathDB, or other sequence databases. Here, we build a database from the enrichment fasta file from Kipp et al. (2023) that contains 52 partial or complete genomes of tick-borne pathogens (see their <a href="https://static-content.springer.com/esm/art%3A10.1038%2Fs41598-023-37134-9/MediaObjects/41598_2023_37134_MOESM1_ESM.pdf">Supplementary Table 1</a>).</p>
 <h3 id="code-3">Code:<a aria-label="Link to this section" class="paige-header-link" href="#code-3"></a></h3>
 <h4 id="create-blast-database">Create BLAST Database:<a aria-label="Link to this section" class="paige-header-link" href="#create-blast-database"></a></h4>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">makeblastdb -in data_example/Kipp_etal_enrichment_reference.fasta -parse_seqids -blastdb_version <span class="m">5</span> -title <span class="s2">&#34;Kipp_etal_enrichment&#34;</span> -dbtype nucl -out blast_database/Kipp_etal_enrichment_reference</span></span></code></pre></div>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">makeblastdb -in data_example/Kipp_etal_enrichment_reference.fasta -parse_seqids -blastdb_version <span class="m">5</span> -title <span class="s2">&#34;Kipp_etal_enrichment&#34;</span> -dbtype nucl -out blast_database/Kipp_etal_enrichment_reference
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#-blastdb_version 5 = Version of blastdb you would like. Version 5 (taxonomy aware) is the default starting with the 2.10.0 release. Value must be 4 or 5.</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -title &#34;Kipp etal_enrichment&#34; = 	Title for BLAST database. If not set, the input file name will be used</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -dbtype nucl = Molecule type of input, values can be nucl or prot.</span></span></span></code></pre></div>
 <br>
 <p><strong>Description</strong>:
-This creates a BLAST database from the enrichment reference genome. The end goal is to identify non-host reads that match to a pathogen from a database we are creating in this step.</p>
+The above line of code creates a local BLAST database from the sequences in Kipp et al.&rsquo;s (2023) enrichment fasta file. This database will be used as a reference against which we can compare our Nanopore sequence data to determine what pathogens are present in the sample.</p>
 <br>
 <h4 id="run-blast-query">Run BLAST Query:<a aria-label="Link to this section" class="paige-header-link" href="#run-blast-query"></a></h4>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blastn -query output_example/Kipp_etal_unmapped_depletion.fasta -db blast_database/Kipp_etal_enrichment_reference -out output_example/Kipp_etal_blast_results.txt</span></span></code></pre></div>
 <br>
 <p><strong>Description</strong>:
-This step performs a BLAST search to compare the unmapped sequences against the BLAST database, producing a text file that gives us reads that matched to a pathogen databse.</p>
-<br>
-<p>To make it easier to summarize blast results, another BLAST query can be run, this time, defining a different type of output <code>-outfmt 6</code>. The following command outputs a tab-delimited file that allows filtering results a little easier.</p>
+This step uses the BLAST algorithm to search for each unmapped Nanopore sequence in the local pathogen reference database, and produce a text file with subject-query matches. In this context, the <code>subject</code> is the reference pathogen sequence and the query is the unmapped Nanopore read. A match occurs when there is &gt;70% identity between the subject and query.
+<br></p>
+<p>To summarize the BLAST results, run another BLAST query defining a tab-delimited output: -outfmt 6.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blastn -query output_example/Kipp_etal_unmapped_depletion.fasta -db blastdb/Kipp_etal_enrichment_reference -out output_example/Kipp_etal_blast_results_table.txt -outfmt <span class="m">6</span>
 </span></span><span class="line"><span class="cl">	<span class="c1">#Options supplied to -outfmt (out format) can be customized to include alignment length,      percent identity, etc.</span>
 </span></span></code></pre></div><br> 
-<h2 id="step-6-summarizing-result">Step 6: Summarizing result<a aria-label="Link to this section" class="paige-header-link" href="#step-6-summarizing-result"></a></h2>
-<h3 id="filtering-sequence-headers-and-query-subjects-based-on-high-percentage-matches">Filtering sequence headers and query subjects based on high percentage matches<a aria-label="Link to this section" class="paige-header-link" href="#filtering-sequence-headers-and-query-subjects-based-on-high-percentage-matches"></a></h3>
-<p>The following command filters the table-formated BLAST output to keep only the information for hits with a matching percentage <code>&gt;97%</code>:</p>
+<h2 id="step-6-summarize-the-results">Step 6: Summarize the Results<a aria-label="Link to this section" class="paige-header-link" href="#step-6-summarize-the-results"></a></h2>
+<p>Here, we can take a look at what a small part of our default BLAST query output looks like:</p>
+<img src="../results/blast4.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<br>
+<p><strong>Lambda, K, H (Ungapped and Gapped)</strong></p>
+<ul>
+<li>These are statistical parameters used in BLAST to model the alignment scoring system.</li>
+<li><strong>Lambda</strong>: Describes the expected distribution of alignment scores.</li>
+<li><strong>K</strong>: Indicates the scale of the search space size.</li>
+<li><strong>H</strong>: Describes the entropy or complexity of the scoring system.</li>
+</ul>
+<p><strong>Effective Search Space Used</strong></p>
+<ul>
+<li>The size of the search space after applying any filters or adjustments based on the query and database.</li>
+</ul>
+<p><strong>Query</strong></p>
+<ul>
+<li>The identifier of the input sequence, for example: <code>SRR17281099.315</code>.</li>
+<li><strong>Length=564</strong>: Refers to the length of the query sequence (in nucleotides or amino acids, depending on the type of BLAST search).</li>
+</ul>
+<p><strong>Sequences Producing Significant Alignments</strong></p>
+<ul>
+<li>Sequences in the database that have significant matches with the query sequence.</li>
+<li><strong>Example</strong>: <code>NC_021880.1_An_ph_str_JM</code></li>
+<li><strong>Length=1481598</strong>: Indicates the length of the subject sequence (in nucleotides or amino acids).</li>
+</ul>
+<p><strong>Score</strong></p>
+<ul>
+<li>The alignment score in <strong>bits</strong>. Higher scores indicate better alignments.
+Score = <strong>821 bits</strong>.</li>
+</ul>
+<p><strong>E-value (Expect Value)</strong></p>
+<ul>
+<li>The <strong>E-value</strong> measures statistical significance; smaller values indicate more significant alignments.</li>
+</ul>
+<p><strong>Identities</strong></p>
+<ul>
+<li>Refers to the number and percentage of identical matches between the query and subject.
+<strong>532/570 (93%)</strong>, meaning that 532 out of 570 positions are identical.</li>
+</ul>
+<p><strong>Gaps</strong></p>
+<ul>
+<li>The number of gaps (insertions or deletions) in the alignment.
+<strong>23/570 (4%)</strong>, meaning 23 positions out of 570 have gaps.</li>
+</ul>
+<p><strong>Strand</strong></p>
+<ul>
+<li>Indicates whether the alignment is on the same strand (plus/plus) or opposite strands (plus/minus).</li>
+</ul>
+<p><strong>Alignment</strong></p>
+<ul>
+<li>The actual sequence alignment between the query and subject:
+<ul>
+<li>Vertical bars (<code>|</code>) indicate identical matches.</li>
+<li>A gap ( ) indicates an insertion or deletion.</li>
+</ul>
+</li>
+</ul>
+<hr>
+<p><strong>Description</strong>:
+Filter matches output from BLAST to retain only the query sequences that matched a reference sequence with &gt;97% identity.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">awk -F<span class="s1">&#39;\t&#39;</span> <span class="s1">&#39;$3 &gt; 97&#39;</span> output_example/Kipp_etal_blast_results_table.txt &gt; summary_example/Kipp_etal_high_hits.txt
-</span></span></code></pre></div><p>The next step is to get a list of &hellip;</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cut -f1 summary_example/Kipp_etal_high_hits.txt <span class="p">|</span> sort <span class="p">|</span> uniq &gt; summary_example/Kipp_etal_high_hit_headers.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># awk is a text processing command that allows you to filter, extract, and manipulate data from structured text, such as by selecting specific fields from a file based on a delimiter, applying conditions, and performing actions on matching lines</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># -F&#39;\t&#39; specifies tabs (\t) as the white-space character delimiting the input file</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># Only rows where the value in the third field ($3) is greater than 97 are written to the output file</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">cut -f1 summary_example/Kipp_etal_high_hits.txt <span class="p">|</span> sort <span class="p">|</span> uniq &gt; summary_example/Kipp_etal_high_hit_headers.txt
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">cut -f2 summary_example/Kipp_etal_high_hits.txt <span class="p">|</span> sort <span class="p">|</span> uniq &gt; summary_example/Kipp_etal_high_hit_subjects.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># cut -f1 extracts the first field from the input file (e.g., HEADERS or individual read IDs), sorts all header names alphanumerically, and removes duplicates</span>
+</span></span><span class="line"><span class="cl">	<span class="c1"># cut -f2 extracts the second field from the input file (e.g., SUBJECTS or where the read hit), sorts all subject names alphanumerical, and removes duplicates</span>
 </span></span></code></pre></div><h3 id="separating-sequences-with-high-percentage-matching">Separating sequences with high percentage matching<a aria-label="Link to this section" class="paige-header-link" href="#separating-sequences-with-high-percentage-matching"></a></h3>
 <p>Initial steps to list the headers of sequences needed:</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">zcat data_example/SRR17281099.fasta.gz &gt; data_example/SRR17281099.fasta
-</span></span><span class="line"><span class="cl"> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#zcat unzips the zipped fasta file </span>
+</span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">samtools faidx data_example/SRR17281099.fasta
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#samtools faidx indexes </span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">headers</span><span class="o">=</span><span class="sb">`</span>cat summary_example/Kipp_etal_high_hit_headers.txt<span class="sb">`</span>
 </span></span></code></pre></div><p>Obtaining the subset of high perecentage matching sequences from the whole set of sequences.</p>
