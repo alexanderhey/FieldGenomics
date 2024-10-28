@@ -881,9 +881,11 @@ The above line of code creates a local BLAST database from the sequences in Kipp
 This step uses the BLAST algorithm to search for each unmapped Nanopore sequence in the local pathogen reference database, and produce a text file with subject-query matches. In this context, the <code>subject</code> is the reference pathogen sequence and the query is the unmapped Nanopore read. A match occurs when there is &gt;70% identity between the subject and query.
 <br></p>
 <p>To summarize the BLAST results, run another BLAST query defining a tab-delimited output: -outfmt 6.</p>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blastn -query output_example/Kipp_etal_unmapped_depletion.fasta -db blastdb/Kipp_etal_enrichment_reference -out output_example/Kipp_etal_blast_results_table.txt -outfmt <span class="m">6</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blastn -query output_example/Kipp_etal_unmapped_depletion.fasta -db blast_database/Kipp_etal_enrichment_reference -out output_example/Kipp_etal_blast_results_table.txt -outfmt <span class="m">6</span>
 </span></span><span class="line"><span class="cl">	<span class="c1">#Options supplied to -outfmt (out format) can be customized to include alignment length,      percent identity, etc.</span>
-</span></span></code></pre></div><br> 
+</span></span></code></pre></div><p>BLASTn tabular output format 6 guide:</p>
+<img src="../results/blasttab.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<br> 
 <h2 id="step-6-summarize-the-results">Step 6: Summarize the Results<a aria-label="Link to this section" class="paige-header-link" href="#step-6-summarize-the-results"></a></h2>
 <p>Here, we can take a look at what a small part of our default BLAST query output looks like:</p>
 <img src="../results/blast4.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
@@ -969,17 +971,17 @@ Filter matches output from BLAST to retain only the query sequences that matched
 </span></span><span class="line"><span class="cl"><span class="nv">headers</span><span class="o">=</span><span class="sb">`</span>cat summary_example/Kipp_etal_high_hit_headers.txt<span class="sb">`</span>
 </span></span></code></pre></div><p>Obtaining the subset of high perecentage matching sequences from the whole set of sequences.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">samtools faidx data_example/SRR17281099.fasta <span class="nv">$headers</span> &gt; summary_example/Kipp_etal_high_hit_sequences.fasta
-</span></span></code></pre></div><h3 id="exploring-results-on-ncbi-blast-online">Exploring results on NCBI-BLAST (online)<a aria-label="Link to this section" class="paige-header-link" href="#exploring-results-on-ncbi-blast-online"></a></h3>
-<p>Here is a graph of the amount of hits per window. Clearly, one reference file is dominating, that being NC_021880.1_An_ph_str._JM</p>
+</span></span></code></pre></div><h3 id="step-7-explore-results-on-ncbi-blast-online">Step 7: Explore results on NCBI-BLAST (online)<a aria-label="Link to this section" class="paige-header-link" href="#step-7-explore-results-on-ncbi-blast-online"></a></h3>
+<p>Below is a graph of the number of hits per reference pathogen sequence. Clearly, one sequence (<code>NC_021880.1_An_ph_str._JM</code>) is more common than the others.</p>
 <img src="../results/hitsperwindows.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
-<p>Here is a snip of the data generated in Kipp_etal_blast_results_table.txt in Excel. It has been filtered for % Match above 97% and sorted by desencding read length. You can see that the longest high-quality hit was for the same reference as above, NC_021880.1_An_ph_str._JM.</p>
+<p>As an example, below a screenshot of the <code>Kipp_etal_blast_results_table.txt</code> output file. The data has been filtered based on % Match (e.g., percent identity) &gt;97% and sorted by descending read length. The longest, high-quality match was also from <code>NC_021990.1_An_ph_str._JM</code>. Many of the reads are 200bp or less, and while they may have a higher % Match, the longer reads tend to have higher E value scores, thus are more informative for comparisons to the entire NCBI database.</p>
 <img src="../results/results2.png" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
-<p>Now, if we want to find that sequence, we can copy the Read name of the file, SRR17281099.418555, and use Ctrl + F on the Kipp_etal_high_hit_sequences.fasta to find the sequence of our read of interest:</p>
+<p>Next, copy the read name associated with the longest, highest-quality match (<code>SRR17281099.418555</code>). Open the text file <code>Kipp_etal_high_hit_sequences.fasta</code> and use <code>Ctrl-F</code> to find that read in the file.:</p>
 <img src="../results/finder.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
-<p>Once we have this read of interest, we can use <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome">NCBI BLAST</a> to investigate of all uploaded nucleotide sequences, where does this one fall?</p>
+<p>Once you&rsquo;ve located that read in the <code>Kipp_etal_high_hit_sequences.fasta</code> file, copy the sequence and paste the sequence into <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome">NCBI BLAST</a> online (Enter accession number(s), gi(s), or FASTA sequence(s) box in the upper left corner) and press <code>search</code>. This will return similar sequences in GenBank, displayed as shown in the image below:</p>
 <p>First, we paste out sequence into the nucleotide box:
 <img src="../results/blast1.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/></p>
-<p>After searching, a results pane will show you results similar to what we had on the command line, but in a different format.</p>
+<p>After searching, a results pane will show you results similar to what we had on the command line, but in a different format. In the top right panel, we can filter our hits by organism, percent identity, E value, and Query Coverage. The bottom panel shows all of the hits, sorted by E value by default. More information about each sequence that hit can be found by clicking the name in the Description column. There are also many options for viewing the alignments, such as in the Graphic Summary and Alignments tabs, or by clicking MSA viewer.</p>
 <img src="../results/blast2.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
 <p>NCBI has a neat feature where you can view how your sequence (highlighted in yellow) compares to other uploaded sequences:</p>
 <img src="../results/blast3.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
@@ -988,15 +990,52 @@ Filter matches output from BLAST to retain only the query sequences that matched
 <hr>
 <h1 id="real-time-example">Real-Time Example<a aria-label="Link to this section" class="paige-header-link" href="#real-time-example"></a></h1>
 <p><strong>Description:</strong>
-This section contains all of the code we will use to analyze the Nanopore sequence data generated during the workshop. This is not part of the worked example.
+This section contains all of the code we will use to analyze the Nanopore sequence data generated during this workshop. This is not part of the worked example (above).
 <br></p>
+<p>What we choose to sequence will depend on the diversity of mammals collected, and will lead to one of two workflows: (1) Pathogen Detection via Host-Depletion or (2) Cryptic species identification via mitogenome enrichment</p>
+<style>
+  pre {
+    font-size: 0.9em; /* Adjust to control the font size of the code */
+    background-color: #2e2e2e; /* A subtle background for code */
+    color: #f8f8f2;
+    padding: 10px;
+    border-radius: 4px;
+  }
+
+  h2, h3 {
+    font-size: 1.5em;
+  }
+
+  .tab-button {
+    padding: 10px 20px;
+    background-color: #007BFF;
+    color: black;
+    border: none;
+    cursor: pointer;
+    margin-right: 10px;
+    border-radius: 4px;
+  }
+
+  .tab-button:hover {
+    background-color: #0056b3;
+  }
+</style>
+<div style="margin-bottom: 20px;">
+  <button id="windowsButton" class="tab-button" onclick="toggleSection('windows')">Pathogen Detection </button>
+  <button id="macButton" class="tab-button" onclick="toggleSection('mac')">Cryptic Species Identification</button>
+</div>
+<!-- Windows (With Ubuntu) / Linux Installation Section -->
+<div id="windows" style="display:none;">
+<h2> Depletion of host genomes for bacterial and fungal pathogen identification  </h2>
 <h2 id="1-basecalling">1. Basecalling<a aria-label="Link to this section" class="paige-header-link" href="#1-basecalling"></a></h2>
 <p><strong>Description:</strong>
 Basecalling is the process of determining the sequence of nucleotide bases from the raw data generated by the sequencer. For Nanopore sequencing, basecalling involves interpreting changes in electral current as single-stranded DNA (or RNA) passes through the nanopore. Current fluctuations correspond to different nucleotide bases which are decoded into <span style="color: #ff0000;">A&rsquo;s</span>,
 <span style="color: #00ff00;">G&rsquo;s</span>,
 <span style="color: #0000ff;">T&rsquo;s</span>,
 and <span style="color: #ffa500;">C&rsquo;s</span> by the dorado basecalling software.</p>
-<p><a href="../scripts/01_basecall.sh">Download 01_basecall.sh</a></p>
+<p>Bash is a scripting language that XYZ. We can bundle multiple commands together into a script (.sh) file, which is just a plain-text file that can be interpreted and executed by the computer. The code block below contains all of the text in the script file. All Bash scripts must begin with <code>#! /binbash/</code> as that line tells the computer where to find the Bash program/executable. Then, variables are defined (base_dir, output_dir, dorado) to make the actual code easier to read.</p>
+<p>The code below runs the dorado basecaller on each barcdoe (1 through 24) and produces an output BAM file for each, respectively.</p>
+<p><a href="../scripts/01_basecall.sh"><code>Download 01_basecall.sh</code></a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for pod5 files</span>
 </span></span><span class="line"><span class="cl"><span class="nv">base_dir</span><span class="o">=</span><span class="s2">&#34;/Library/MinKNOW/data/Ecuador_Workshop_Training_Pathogens_Pero/no_sample/20240913_1820_MN40667_FAY96875_60fc85db/pod5_pass&#34;</span>
@@ -1018,7 +1057,7 @@ and <span style="color: #ffa500;">C&rsquo;s</span> by the dorado basecalling sof
 </span></span><span class="line"><span class="cl"><span class="k">do</span>
 </span></span><span class="line"><span class="cl">    <span class="nv">$dorado</span> basecaller dna_r10.4.1_e8.2_400bps_fast@v5.0.0 <span class="s2">&#34;</span><span class="nv">$base_dir</span><span class="s2">/</span><span class="nv">$barcode</span><span class="s2">/&#34;</span> &gt; <span class="s2">&#34;</span><span class="nv">$output_dir</span><span class="s2">/</span><span class="si">${</span><span class="nv">barcode</span><span class="si">}</span><span class="s2">.bam&#34;</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
-<p>Names of Dorado models (i.e., here we use <a href="https://github.com/nanoporetech/dorado?tab=readme-ov-file#dna-models">dna_r10.4.1_e8.2_400bps_fast@5.0.0</a>) are systematically structured, each segment corresponding to a different aspect of the model. Below is a breakdown of the model we used:</p>
+<p>Names of Dorado models (i.e., Here, we use the basecaller model <a href="https://github.com/nanoporetech/dorado?tab=readme-ov-file#dna-models"><code>dna_r10.4.1_e8.2_400bps_fast@5.0.0</code></a>. Dorado model names are systematically structured, such that each segment corresponds to a different aspect of the model:</p>
 <p><strong>Analyte Type (dna)</strong>: This denotes the type of analyte being sequenced. For DNA sequencing, it is represented as dna. If you are using a Direct RNA Sequencing Kit, this will be rna002 or rna004, depending on the kit.</p>
 <p><strong>Pore Type (r10.4.1)</strong>: This section corresponds to the type of flow cell used. For instance, FLO-MIN114/FLO-FLG114 is indicated by r10.4.1, while FLO-MIN106D/FLO-FLG001 is signified by r9.4.1.</p>
 <p><strong>Chemistry Type (e8.2)</strong>: This represents the chemistry type, which corresponds to the kit used for sequencing. For example, Kit 14 chemistry is denoted by e8.2 and Kit 10 or Kit 9 are denoted by e8.</p>
@@ -1027,9 +1066,9 @@ and <span style="color: #ffa500;">C&rsquo;s</span> by the dorado basecalling sof
 <p><strong>Model Version Number (v5.0.0)</strong>: This denotes the version of the model. Model updates are regularly released, and higher version numbers typically signify greater accuracy.
 For more details on decoding dorado model names see <a href="https://github.com/nanoporetech/dorado">here</a>.</p>
 <br>
-<h2 id="2-aligning-bam-files-to-a-reference-genome">2. Aligning BAM Files to a Reference Genome<a aria-label="Link to this section" class="paige-header-link" href="#2-aligning-bam-files-to-a-reference-genome"></a></h2>
-<p>This step aligns the Nanopore sequencing reads to the reference genome. BAM files contain the same information as a SAM file, but in binary format which is not human readable. BAM files are generally smaller, however, and are therefore more efficient for software to work with. Alignment data is almost always stored as a BAM file and most software that analyzes aligned reads expects a BAM file as input.</p>
-<p><a href="../scripts/02align.sh">Download 02align.sh</a></p>
+<h2 id="2-align-bam-files-to-a-reference-genome">2. Align BAM Files to a Reference Genome<a aria-label="Link to this section" class="paige-header-link" href="#2-align-bam-files-to-a-reference-genome"></a></h2>
+<p>In this step, we align Nanopore reads to a reference genome. BAM files contain the same information as a SAM file, but in binary format which is not human readable. BAM files are generally smaller, however, and are therefore more efficient for software to work with. Alignment data is almost always stored as a BAM file and most software that analyzes aligned reads expects a BAM file as input.</p>
+<p><a href="../scripts/02align.sh"><code>Download 02_align.sh</code></a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Path to the reference genome</span>
@@ -1056,7 +1095,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 <br>
 <h2 id="3-extracting-unaligned-reads">3. Extracting Unaligned Reads<a aria-label="Link to this section" class="paige-header-link" href="#3-extracting-unaligned-reads"></a></h2>
 <p>Next, we extract the unaligned reads from the BAM files using <code>samtools</code>. This step is crucial for isolating reads that did not align to the reference genome, allowing us to focus on non-host sequences.</p>
-<p><a href="../scripts/03_unmapped_reads.sh">Download 03_unmapped_reads.sh</a></p>
+<p><a href="../scripts/03_unmapped_reads.sh"><code>Download 03_unmapped_reads.sh</code></a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Path to samtools (ensure samtools is installed and accessible in your PATH)</span>
@@ -1083,7 +1122,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 <br>
 <h2 id="4-renaming-sequence-ids-before-database-creation">4. Renaming Sequence IDs Before Database Creation<a aria-label="Link to this section" class="paige-header-link" href="#4-renaming-sequence-ids-before-database-creation"></a></h2>
 <p>Before creating the BLAST database, we rename the sequence IDs in the FASTA file to ensure uniqueness and compatibility. This step is essential for maintaining consistency in downstream analyses.</p>
-<p><a href="../scripts/03.5_shorten_fasta_header.sh">Download 03.5_shorten_fasta_header.sh</a></p>
+<p><a href="../scripts/03.5_shorten_fasta_header.sh"><code>Download 03.5_shorten_fasta_header.sh</code></a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl">awk <span class="s1">&#39;
@@ -1101,7 +1140,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 <br>
 <h2 id="5-creating-a-blast-database">5. Creating a BLAST Database<a aria-label="Link to this section" class="paige-header-link" href="#5-creating-a-blast-database"></a></h2>
 <p>With the sequence IDs renamed, we now create a BLAST database from the reference FASTA file. This database will be used for identifying the unaligned sequences.</p>
-<p><a href="../scripts/04_blast_db_creation.sh">Download 04_blast_db_creation.sh</a></p>
+<p><a href="../scripts/04_blast_db_creation.sh"><code>Download 04_blast_db_creation.sh</code></a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Make the database</span>
@@ -1112,7 +1151,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 <br>
 <h2 id="6-converting-bam-to-fasta">6. Converting BAM to FASTA<a aria-label="Link to this section" class="paige-header-link" href="#6-converting-bam-to-fasta"></a></h2>
 <p>Before running BLAST, we need to convert the unaligned BAM files into FASTA format. This step prepares the sequences for the BLAST search.</p>
-<p><a href="../scripts/05_convert_bam_to_fasta.sh">Download 05_convert_bam_to_fasta.sh</a></p>
+<p><a href="../scripts/05_convert_bam_to_fasta.sh"><code>Download 05_convert_bam_to_fasta.sh</code></a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Load samtools (if needed)</span>
@@ -1135,7 +1174,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 <br>
 <h2 id="7-running-blast-on-fasta-files">7. Running BLAST on FASTA Files<a aria-label="Link to this section" class="paige-header-link" href="#7-running-blast-on-fasta-files"></a></h2>
 <p>The converted FASTA files are then subjected to BLAST search against the created database to identify possible pathogenic sequences.</p>
-<p><a href="../scripts/06_blast_fastas.sh">Download 06_blast_fastas.sh</a></p>
+<p><a href="../scripts/06_blast_fastas.sh"><code>Download 06_blast_fastas.sh</code></a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Set paths</span>
@@ -1155,7 +1194,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 <br>
 <h2 id="8-renaming-sequence-ids-in-blast-results">8. Renaming Sequence IDs in BLAST Results<a aria-label="Link to this section" class="paige-header-link" href="#8-renaming-sequence-ids-in-blast-results"></a></h2>
 <p>Finally, the sequence IDs in the BLAST output are renamed to match their original identifiers, providing clear traceability of the sequences.</p>
-<p><a href="../scripts/07_rename_seqIDs.sh">Download 07_rename_seqIDs.sh</a></p>
+<p><a href="../scripts/07_rename_seqIDs.sh"><code>Download 07_rename_seqIDs.sh</code></a></p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span>
 </span></span><span class="line"><span class="cl"><span class="c1"># Define directories and files</span>
@@ -1175,6 +1214,127 @@ For more details on decoding dorado model names see <a href="https://github.com/
 </span></span><span class="line"><span class="cl">    awk <span class="s1">&#39;NR==FNR {map[$1]=$2; next} $2 in map {$2=map[$2]}1&#39;</span> <span class="nv">$MAPPING_FILE</span> <span class="nv">$INPUT_FILE</span> &gt; <span class="nv">$OUTPUT_FILE</span>
 </span></span><span class="line"><span class="cl">    
 </span></span><span class="line"><span class="cl">    <span class="nb">echo</span> <span class="s2">&#34;Processed </span><span class="nv">$INPUT_FILE</span><span class="s2"> -&gt; </span><span class="nv">$OUTPUT_FILE</span><span class="s2">&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
+</div>
+<!--Cryptic Species ID -->
+<div id="mac" style="display:none;">
+  <h2>Molecular species ID through mitochondrial genome enrichment </h2>
+<h2 id="1-basecalling-1">1. Basecalling<a aria-label="Link to this section" class="paige-header-link" href="#1-basecalling-1"></a></h2>
+<p><strong>Description:</strong>
+Basecalling is the process of determining the sequence of nucleotide bases from the raw data generated by the sequencer. For Nanopore sequencing, basecalling involves interpreting changes in electral current as single-stranded DNA (or RNA) passes through the nanopore. Current fluctuations correspond to different nucleotide bases which are decoded into <span style="color: #ff0000;">A&rsquo;s</span>,
+<span style="color: #00ff00;">G&rsquo;s</span>,
+<span style="color: #0000ff;">T&rsquo;s</span>,
+and <span style="color: #ffa500;">C&rsquo;s</span> by the dorado basecalling software.</p>
+<p>Bash is a scripting language that XYZ. We can bundle multiple commands together into a script (.sh) file, which is just a plain-text file that can be interpreted and executed by the computer. The code block below contains all of the text in the script file. All Bash scripts must begin with <code>#! /binbash/</code> as that line tells the computer where to find the Bash program/executable. Then, variables are defined (base_dir, output_dir, dorado) to make the actual code easier to read.</p>
+<p>The code below runs the dorado basecaller on each barcdoe (1 through 24) and produces an output BAM file for each, respectively.</p>
+<p><a href="../scripts/01_basecall.sh"><code>Download 01_basecall.sh</code></a></p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for pod5 files</span>
+</span></span><span class="line"><span class="cl"><span class="nv">base_dir</span><span class="o">=</span><span class="s2">&#34;/Library/MinKNOW/data/Ecuador_Workshop_Training_Pathogens_Pero/no_sample/20240913_1820_MN40667_FAY96875_60fc85db/pod5_pass&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Output directory for basecalling results</span>
+</span></span><span class="line"><span class="cl"><span class="nv">output_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/field_genomics/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#dorado path</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">dorado</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Documents/software/dorado-0.7.0-osx-arm64/bin/dorado&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Loop through each barcode directory</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># this loops over files named barcode01, barcode02, ..., barcode24</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The number of barcode files will depend on the number of individuals multiplexed and being analyzed simultaneously</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">    <span class="nv">$dorado</span> basecaller dna_r10.4.1_e8.2_400bps_fast@v5.0.0 <span class="s2">&#34;</span><span class="nv">$base_dir</span><span class="s2">/</span><span class="nv">$barcode</span><span class="s2">/&#34;</span> &gt; <span class="s2">&#34;</span><span class="nv">$output_dir</span><span class="s2">/</span><span class="si">${</span><span class="nv">barcode</span><span class="si">}</span><span class="s2">.bam&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
+<p>Names of Dorado models (i.e., Here, we use the basecaller model <a href="https://github.com/nanoporetech/dorado?tab=readme-ov-file#dna-models"><code>dna_r10.4.1_e8.2_400bps_fast@5.0.0</code></a>. Dorado model names are systematically structured, such that each segment corresponds to a different aspect of the model:</p>
+<p><strong>Analyte Type (dna)</strong>: This denotes the type of analyte being sequenced. For DNA sequencing, it is represented as dna. If you are using a Direct RNA Sequencing Kit, this will be rna002 or rna004, depending on the kit.</p>
+<p><strong>Pore Type (r10.4.1)</strong>: This section corresponds to the type of flow cell used. For instance, FLO-MIN114/FLO-FLG114 is indicated by r10.4.1, while FLO-MIN106D/FLO-FLG001 is signified by r9.4.1.</p>
+<p><strong>Chemistry Type (e8.2)</strong>: This represents the chemistry type, which corresponds to the kit used for sequencing. For example, Kit 14 chemistry is denoted by e8.2 and Kit 10 or Kit 9 are denoted by e8.</p>
+<p><strong>Translocation Speed (400bps)</strong>: This parameter, selected at the run setup in MinKNOW, refers to the speed of translocation. Prior to starting your run, a prompt will ask if you prefer to run at 260 bps or 400 bps. The former yields more accurate results but provides less data. As of MinKNOW version 23.04, the 260 bps option has been deprecated.</p>
+<p><strong>Model Type (hac)</strong>: This represents the size of the model, where larger models yield more accurate basecalls but take more time. The three types of models are fast, hac, and sup. The fast model is the quickest, sup is the most accurate, and hac provides a balance between speed and accuracy. For most users, the hac model is recommended.</p>
+<p><strong>Model Version Number (v5.0.0)</strong>: This denotes the version of the model. Model updates are regularly released, and higher version numbers typically signify greater accuracy.
+For more details on decoding dorado model names see <a href="https://github.com/nanoporetech/dorado">here</a>.</p>
+<h2 id="2-convert-each-bam-file-to-a-fasta-format">2. Convert each BAM file to a FASTA format<a aria-label="Link to this section" class="paige-header-link" href="#2-convert-each-bam-file-to-a-fasta-format"></a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for output</span>
+</span></span><span class="line"><span class="cl"><span class="nv">base_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/01_sup_out&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Output directory for basecalling results</span>
+</span></span><span class="line"><span class="cl"><span class="nv">output_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/02_convert_bams_out/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mkdir <span class="nv">$output_dir</span> -p
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># this loops over files named barcode01, barcode02, ..., barcode24</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The number of barcode files will depend on the number of individuals multiplexed and being analyzed simultaneously</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">    samtools fastq <span class="s2">&#34;</span><span class="nv">$base_dir</span><span class="s2">/</span><span class="nv">$barcode</span><span class="s2">.bam&#34;</span> &gt; <span class="s2">&#34;</span><span class="nv">$output_dir</span><span class="s2">/</span><span class="si">${</span><span class="nv">barcode</span><span class="si">}</span><span class="s2">.fastq&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
+<br>
+</div>
+<h2 id="2-run-flye">2. Run Flye<a aria-label="Link to this section" class="paige-header-link" href="#2-run-flye"></a></h2>
+<p><strong>Description</strong>:
+<a href="https://github.com/mikolmogorov/Flye">FLYE</a> is a software tool used to assemble genomes from long DNA sequences without a reference file to base the alignments off of. It pieces together overlapping DNA reads to form a continuous sequence, even if the data is noisy or has gaps. For mitogenomes, FLYE helps combine these long reads into a complete mitochondrial genome, and sometimes reads may span the entire mitogenome, making FLYE&rsquo;s aligning pretty easy.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for output</span>
+</span></span><span class="line"><span class="cl"><span class="nv">base_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/02_convert_bams_out&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Output directory for basecalling results</span>
+</span></span><span class="line"><span class="cl"><span class="nv">output_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/03_flye_out&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mkdir <span class="nv">$output_dir</span> -p
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">conda activate base
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
+</span></span><span class="line"><span class="cl"><span class="c1"># this loops over files named barcode01, barcode02, ..., barcode24</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The number of barcode files will depend on the number of individuals multiplexed and being analyzed simultaneously</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">  flye --genome-size <span class="m">16000</span> --nano-hq <span class="nv">$base_dir</span>/<span class="nv">$barcode</span>.fastq --out-dir <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>
+</span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
+<br>
+</div>
+<h2 id="3-align-your-mitochondrial-genomes-using-muscle">3. Align your mitochondrial genomes using MUSCLE<a aria-label="Link to this section" class="paige-header-link" href="#3-align-your-mitochondrial-genomes-using-muscle"></a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
+</span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for output</span>
+</span></span><span class="line"><span class="cl"><span class="nv">base_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/03_flye_out&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Output directory for basecalling results</span>
+</span></span><span class="line"><span class="cl"><span class="nv">output_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/04_muscle_alignments&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">mkdir <span class="nv">$output_dir</span> -p
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Assign the names of the contigs that correspond to the mitogenomes in each sample. The names here should be in the same order as the names of the barcodes. </span>
+</span></span><span class="line"><span class="cl"><span class="nv">contigs</span><span class="o">=</span><span class="s2">&#34;contig_40 contig_71&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># initiate the counter</span>
+</span></span><span class="line"><span class="cl"><span class="nv">i</span><span class="o">=</span><span class="m">1</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode04 barcode08
+</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># this loops over files named barcode01, barcode02, ..., barcode24</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The number of barcode files will depend on the number of individuals multiplexed and being analyzed simultaneously</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  <span class="nv">contig</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$contigs</span> <span class="p">|</span> cut -f<span class="nv">$i</span> -d<span class="s2">&#34; &#34;</span><span class="sb">`</span>
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  samtools faidx <span class="nv">$base_dir</span>/<span class="nv">$barcode</span>/assembly.fasta
+</span></span><span class="line"><span class="cl">  samtools faidx <span class="nv">$base_dir</span>/<span class="nv">$barcode</span>/assembly.fasta <span class="nv">$contig</span> &gt; <span class="nv">$output_dir</span>/mito.<span class="nv">$barcode</span>.fasta
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  cat <span class="nv">$output_dir</span>/*.fasta &gt; <span class="nv">$output_dir</span>/concatanated.fasta
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl">  muscle -in <span class="nv">$output_dir</span>/concatanated.fasta -out <span class="nv">$output_dir</span>/mito.afa
+</span></span><span class="line"><span class="cl">  
+</span></span><span class="line"><span class="cl"><span class="c1">#increment the counter</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">i</span><span class="o">=</span><span class="k">$((</span>i+1<span class="k">))</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
 </main>
         
