@@ -1299,43 +1299,53 @@ For more details on decoding dorado model names see <a href="https://github.com/
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
 <br>
 </div>
-<h2 id="3-align-your-mitochondrial-genomes-using-muscle">3. Align your mitochondrial genomes using MUSCLE<a aria-label="Link to this section" class="paige-header-link" href="#3-align-your-mitochondrial-genomes-using-muscle"></a></h2>
+<h2 id="3-align-your-mitochondrial-genomes-using-dorado">3. Align your mitochondrial genomes using Dorado<a aria-label="Link to this section" class="paige-header-link" href="#3-align-your-mitochondrial-genomes-using-dorado"></a></h2>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for output</span>
-</span></span><span class="line"><span class="cl"><span class="nv">base_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/03_flye_out&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">dorado</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Documents/software/dorado-0.7.0-osx-arm64/bin/dorado&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">base_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/01_sup_out&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="c1"># Output directory for basecalling results</span>
-</span></span><span class="line"><span class="cl"><span class="nv">output_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/04_muscle_alignments&#34;</span>
+</span></span><span class="line"><span class="cl"><span class="nv">output_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/03_dorado_align_out/&#34;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="nv">reference_path</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/Peromyscus_mito/pero_mito.txt&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">mkdir <span class="nv">$output_dir</span> -p
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Assign the names of the contigs that correspond to the mitogenomes in each sample. The names here should be in the same order as the names of the barcodes. </span>
-</span></span><span class="line"><span class="cl"><span class="nv">contigs</span><span class="o">=</span><span class="s2">&#34;contig_40 contig_71&#34;</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># initiate the counter</span>
-</span></span><span class="line"><span class="cl"><span class="nv">i</span><span class="o">=</span><span class="m">1</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode04 barcode08
 </span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">  <span class="nv">$dorado</span> aligner <span class="nv">$reference_path</span> <span class="nv">$base_dir</span>/<span class="nv">$barcode</span>.bam <span class="p">|</span> samtools sort &gt; <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.bam 
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># this loops over files named barcode01, barcode02, ..., barcode24</span>
-</span></span><span class="line"><span class="cl"><span class="c1"># The number of barcode files will depend on the number of individuals multiplexed and being analyzed simultaneously</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># The &#34; | &#34; is a pipe command. It sends the output of the alignment into the samtools sort funtion. This function puts our reads in order so we can create a consensus sequence on the next step. </span></span></span></code></pre></div>
+<h2 id="create-a-consensus-sequence-using-samtools">Create a Consensus Sequence using samtools<a aria-label="Link to this section" class="paige-header-link" href="#create-a-consensus-sequence-using-samtools"></a></h2>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">do</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  <span class="nv">contig</span><span class="o">=</span><span class="sb">`</span><span class="nb">echo</span> <span class="nv">$contigs</span> <span class="p">|</span> cut -f<span class="nv">$i</span> -d<span class="s2">&#34; &#34;</span><span class="sb">`</span>
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  samtools faidx <span class="nv">$base_dir</span>/<span class="nv">$barcode</span>/assembly.fasta
-</span></span><span class="line"><span class="cl">  samtools faidx <span class="nv">$base_dir</span>/<span class="nv">$barcode</span>/assembly.fasta <span class="nv">$contig</span> &gt; <span class="nv">$output_dir</span>/mito.<span class="nv">$barcode</span>.fasta
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  cat <span class="nv">$output_dir</span>/*.fasta &gt; <span class="nv">$output_dir</span>/concatanated.fasta
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl">  muscle -in <span class="nv">$output_dir</span>/concatanated.fasta -out <span class="nv">$output_dir</span>/mito.afa
-</span></span><span class="line"><span class="cl">  
-</span></span><span class="line"><span class="cl"><span class="c1">#increment the counter</span>
-</span></span><span class="line"><span class="cl">  <span class="nv">i</span><span class="o">=</span><span class="k">$((</span>i+1<span class="k">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Pull consensus sequence sequence of the sample out of the alignment (BAM) file</span>
+</span></span><span class="line"><span class="cl">  samtools consensus -a --min-MQ <span class="m">10</span> --min-BQ <span class="m">10</span> <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.bam &gt; <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.fasta
+</span></span><span class="line"><span class="cl"><span class="c1">#-a include all positions</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#-min-MQ minimum mapping quality</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#-min-BQ minimum base quality</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
+<h2 id="converting-our-consensus-sequence-into-a-format-for-alingment">Converting our consensus sequence into a format for alingment<a aria-label="Link to this section" class="paige-header-link" href="#converting-our-consensus-sequence-into-a-format-for-alingment"></a></h2>
+<h1 id="rename-the-header-in-each-fasta-file-by-the-name-of-the-fasta-file">Rename the header in each fasta file by the name of the fasta file<a aria-label="Link to this section" class="paige-header-link" href="#rename-the-header-in-each-fasta-file-by-the-name-of-the-fasta-file"></a></h1>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">do</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">sed <span class="s1">&#39;s/^&gt;.*/&gt;&#39;</span><span class="si">${</span><span class="nv">barcode</span><span class="si">}</span><span class="s1">&#39;/&#39;</span> <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.fasta &gt; <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.rename.fasta
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">done</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># concatanate all mitogenome sequences into one fasta file</span>
+</span></span><span class="line"><span class="cl">cat <span class="nv">$output_dir</span>/*.rename.fasta &gt; <span class="nv">$output_dir</span>/concatanated.fasta
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># Use MEGA to bring in concatanated fasta file, align the sequences, and build a tree</span></span></span></code></pre></div>
 </main>
         
 
