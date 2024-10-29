@@ -1300,9 +1300,11 @@ For more details on decoding dorado model names see <a href="https://github.com/
 <br>
 </div>
 <h2 id="3-align-your-mitochondrial-genomes-using-dorado">3. Align your mitochondrial genomes using Dorado<a aria-label="Link to this section" class="paige-header-link" href="#3-align-your-mitochondrial-genomes-using-dorado"></a></h2>
+<p><strong>Desription</strong>: The dorado package is a suite of tools tailored for working with long read, nanopore sequence data. This is the aligning function in nanopore in which we provide a reference genome or an idea of what the genome should look like. The reads are then aligned to that reference to create a file for each individual&rsquo;s reads.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for output</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#path for where you installed Dorado</span>
 </span></span><span class="line"><span class="cl"><span class="nv">dorado</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Documents/software/dorado-0.7.0-osx-arm64/bin/dorado&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="nv">base_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/01_sup_out&#34;</span>
@@ -1310,6 +1312,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 </span></span><span class="line"><span class="cl"><span class="c1"># Output directory for basecalling results</span>
 </span></span><span class="line"><span class="cl"><span class="nv">output_dir</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/03_dorado_align_out/&#34;</span>
 </span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#Path to the reference file you want to align to</span>
 </span></span><span class="line"><span class="cl"><span class="nv">reference_path</span><span class="o">=</span><span class="s2">&#34;/Users/mammalogy/Ecuador_Workshop/Peromyscus_mito/pero_mito.txt&#34;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">mkdir <span class="nv">$output_dir</span> -p
@@ -1332,20 +1335,30 @@ For more details on decoding dorado model names see <a href="https://github.com/
 </span></span><span class="line"><span class="cl"><span class="c1">#-min-MQ minimum mapping quality</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#-min-BQ minimum base quality</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
-<h2 id="converting-our-consensus-sequence-into-a-format-for-alingment">Converting our consensus sequence into a format for alingment<a aria-label="Link to this section" class="paige-header-link" href="#converting-our-consensus-sequence-into-a-format-for-alingment"></a></h2>
-<h1 id="rename-the-header-in-each-fasta-file-by-the-name-of-the-fasta-file">Rename the header in each fasta file by the name of the fasta file<a aria-label="Link to this section" class="paige-header-link" href="#rename-the-header-in-each-fasta-file-by-the-name-of-the-fasta-file"></a></h1>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
+<h2 id="4-converting-our-consensus-sequence-into-a-format-for-alingment">4. Converting our consensus sequence into a format for alingment<a aria-label="Link to this section" class="paige-header-link" href="#4-converting-our-consensus-sequence-into-a-format-for-alingment"></a></h2>
+<p><strong>Description</strong>:
+Rename the header in each fasta file by the name of the fasta file</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Loop through a series of barcode numbers from 01 to 24</span>
+</span></span><span class="line"><span class="cl"><span class="k">for</span> barcode in barcode<span class="o">{</span>01..24<span class="o">}</span> 
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">do</span>
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">sed <span class="s1">&#39;s/^&gt;.*/&gt;&#39;</span><span class="si">${</span><span class="nv">barcode</span><span class="si">}</span><span class="s1">&#39;/&#39;</span> <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.fasta &gt; <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.rename.fasta
+</span></span><span class="line"><span class="cl">    <span class="c1"># For each barcode, find lines in the file that start with &#34;&gt;&#34;, which indicates the name of a sequence in a FASTA file.</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># Replace this part (&#34;&gt;&#34;) with a new name that includes the barcode number (e.g., barcode01, barcode02, etc.).</span>
+</span></span><span class="line"><span class="cl">    <span class="c1"># This will rename the sequences based on their barcode and save them to a new file.</span>
+</span></span><span class="line"><span class="cl">    sed <span class="s1">&#39;s/^&gt;.*/&gt;&#39;</span><span class="si">${</span><span class="nv">barcode</span><span class="si">}</span><span class="s1">&#39;/&#39;</span> <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.fasta &gt; <span class="nv">$output_dir</span>/<span class="nv">$barcode</span>.rename.fasta
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl"><span class="k">done</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># concatanate all mitogenome sequences into one fasta file</span>
-</span></span><span class="line"><span class="cl">cat <span class="nv">$output_dir</span>/*.rename.fasta &gt; <span class="nv">$output_dir</span>/concatanated.fasta
-</span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="c1"># Use MEGA to bring in concatanated fasta file, align the sequences, and build a tree</span></span></span></code></pre></div>
+</span></span><span class="line"><span class="cl"><span class="c1"># Combine (concatenate) all the renamed sequences into a single file called &#34;concatenated.fasta&#34;</span>
+</span></span><span class="line"><span class="cl">cat <span class="nv">$output_dir</span>/*.rename.fasta &gt; <span class="nv">$output_dir</span>/concatanated.fasta</span></span></code></pre></div>
+<h2 id="5-use-mega-to-bring-in-concatanated-fasta-file-align-the-sequences-and-build-a-tree">5. Use MEGA to bring in concatanated fasta file, align the sequences, and build a tree<a aria-label="Link to this section" class="paige-header-link" href="#5-use-mega-to-bring-in-concatanated-fasta-file-align-the-sequences-and-build-a-tree"></a></h2>
+<p><strong>Description</strong>: <a href="https://www.megasoftware.net/">MEGA</a> (Molecular Evolutionary Genetics Analysis) is a bioinformatics software suite used to analyze and visualize molecular sequence data to study evolutionary relationships. It provides tools for constructing phylogenetic trees, estimating divergence times, and testing evolutionary hypotheses using nucleotide and protein sequences.</p>
+<br>
+<p>Here, we imported <code>concatanated.fasta</code> into the MEGA Alignment explorer. Each barcode is a row and in that row are all of the nucleotide bases in order, alinged to eachother. Each base is a different color, with N&rsquo;s representing bases of unknown identity.</p>
+<img src="../results/mega1.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<p>It&rsquo;s easy to see here that the mitochondrial genomes match each other near perfectly, but how does each sequence relate to the rest? For that answer, we can use the MEGA tree explorer on the same file. It will deisplay the same sequences, but group them as a tree, with individuals with more similar sequences being placed closer to eachother on the tree.</p>
+<br>
+<img src="../results/mega2.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
 </main>
         
 
