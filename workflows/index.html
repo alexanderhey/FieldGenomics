@@ -54,14 +54,14 @@
 
 <meta property="og:url" content="/workflows/">
   <meta property="og:title" content="Nanopore workflow">
-  <meta property="og:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this portion of the workshop is to practice the basic bioinformatic workflow required to process nanopore adaptive sampling sequence data. Specifically, we will map reads to reference sequences, filter out host sequences, and perform homology searches against known pathogen sequences. This workflow uses publicly available data published by Kipp et al. (2023).">
+  <meta property="og:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this portion of the workshop is to practice the basic bioinformatic workflow required to process Nanopore adaptive sampling sequence data. Specifically, we will map reads to reference sequences, filter out host sequences, and perform homology searches against known pathogen sequences. This workflow uses publicly available data published by Kipp et al. (2023).">
   <meta property="og:locale" content="en_us">
   <meta property="og:type" content="website">
 
 
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Nanopore workflow">
-  <meta name="twitter:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this portion of the workshop is to practice the basic bioinformatic workflow required to process nanopore adaptive sampling sequence data. Specifically, we will map reads to reference sequences, filter out host sequences, and perform homology searches against known pathogen sequences. This workflow uses publicly available data published by Kipp et al. (2023).">
+  <meta name="twitter:description" content=" Table of Contents Molecular Procedures Worked Example Real-Time Example Molecular Procedures DNA Extraction Library Preparation Flow Cell Wash and Storage DNA Extraction Download DNA Extraction Protocol Library Preparation Download Nanopore Native Barcode Library Prep PDF Flow Cell Wash and Storage Download Flow Cell Wash and Storage Protocol PDF Worked Example The goal of this portion of the workshop is to practice the basic bioinformatic workflow required to process Nanopore adaptive sampling sequence data. Specifically, we will map reads to reference sequences, filter out host sequences, and perform homology searches against known pathogen sequences. This workflow uses publicly available data published by Kipp et al. (2023).">
 
 
 
@@ -762,10 +762,10 @@ pre code {
 <br>
 <hr>
 <h1 id="worked-example">Worked Example<a aria-label="Link to this section" class="paige-header-link" href="#worked-example"></a></h1>
-<p>The goal of this portion of the workshop is to practice the basic bioinformatic workflow required to process nanopore adaptive sampling sequence data. Specifically, we will map reads to reference sequences, filter out host sequences, and perform homology searches against known pathogen sequences. This workflow uses publicly available data published by <a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a>.</p>
+<p>The goal of this portion of the workshop is to practice the basic bioinformatic workflow required to process Nanopore adaptive sampling sequence data. Specifically, we will map reads to reference sequences, filter out host sequences, and perform homology searches against known pathogen sequences. This workflow uses publicly available data published by <a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a>.</p>
 <p><a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a> shows how NAS can be used to selectively sequence DNA from multiple bacterial tick-borne pathogens circulating in wild populations of the black-legged tick vector, <i>Ixodes scapularis</i>. They test the consistency of pathogen recovery using NAS enrichment and depletion methods, compared to more traditional Illumina metagenomic sequencing methods. NAS enrichment and depletion methods successfully recovered 4 bacterial tick-borne pathogens (<i>Borellia burgdorferi</i>; <i>Borella miyamotoi</i>; <i>Anaplasma phagocytophilum</i>; and <i>Eherlichia muris</i>) from 8 female <i>I. scapularis</i> ticks, and even resulted in the sequencing of the entire bacterial pathogen genomes. Importantly, their NAS results were consistent with Illumina 16S microbiome data.</p>
 <p>For this exercise, we are only working with their depletion dataset, as that workflow is best aligned with the sequencing approach of this workshop.
-The goal of this process is to use NAS for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in <a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a>, where nanopore sequencing was used to study tick-borne bacterial pathogens.</p>
+The goal of this process is to use NAS for real-time metagenomic surveillance, targeting pathogen detection in field-collected samples. This approach allows for selective sequencing of desired genomic regions. By performing these steps, we can efficiently map sequencing reads to reference genomes, filter out host sequences, and perform homology searches against known pathogen databases. This workflow mirrors the methodology described in <a href="https://www.nature.com/articles/s41598-023-37134-9">Kipp et al. (2023)</a>, where Nanopore sequencing was used to study tick-borne bacterial pathogens.</p>
 <p>Before starting with Step 1: (1) install the <a href="../programs">Required Software</a>.   (2) make sure you have downloaded Kipp&rsquo;s data as instructed in <a href="../getting-ready">Getting Ready</a>.</p>
 <br>
 <h2 id="step-1-getting-started">Step 1: Getting Started<a aria-label="Link to this section" class="paige-header-link" href="#step-1-getting-started"></a></h2>
@@ -850,7 +850,7 @@ This step aligns the Nanopore sequencing reads to the reference genome. BWA-MEM 
 <li><strong>Output SAM File Path</strong>: <code>output_example/Kipp_etal_alig_depletion.sam</code></li>
 </ul>
 <h3 id="code-1">Code:<a aria-label="Link to this section" class="paige-header-link" href="#code-1"></a></h3>
-<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#template command for nanopore reads: bwa mem -x ont2d &lt;reference_genome.fasta&gt; &lt;raw_reads.fasta.gz&gt; &lt;output.sam&gt;</span>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1">#template command for Nanopore reads: bwa mem -x ont2d &lt;reference_genome.fasta&gt; &lt;raw_reads.fasta.gz&gt; &lt;output.sam&gt;</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">bwa mem -x ont2d data_example/Kipp_etal_depletion_reference.fasta data_example/SRR17281099.fasta.gz &gt; output_example/Kipp_etal_alig_depletion.sam
 </span></span><span class="line"><span class="cl">
@@ -896,7 +896,7 @@ This step uses the BLAST algorithm to search for each unmapped Nanopore sequence
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl">blastn -query output_example/Kipp_etal_unmapped_depletion.fasta -db blast_database/Kipp_etal_enrichment_reference -out output_example/Kipp_etal_blast_results_table.txt -outfmt <span class="m">6</span>
 </span></span><span class="line"><span class="cl">	<span class="c1">#Options supplied to -outfmt (out format) can be customized to include alignment length,      percent identity, etc.</span>
 </span></span></code></pre></div><p>BLASTn tabular output format 6 guide:</p>
-<img src="../results/blasttab.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<img src="../results/blasttab.jpg" alt="Alignment Process" style="max-width: 50%; height: auto; display: block; margin: 0 auto;"/>
 <br> 
 <h2 id="step-6-summarize-the-results">Step 6: Summarize the Results<a aria-label="Link to this section" class="paige-header-link" href="#step-6-summarize-the-results"></a></h2>
 <p>Here, we can take a look at what a small part of our default BLAST query output looks like:</p>
@@ -997,7 +997,8 @@ Filter matches output from BLAST to retain only the query sequences that matched
 <img src="../results/blast2.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
 <p>NCBI has a neat feature where you can view how your sequence (highlighted in yellow) compares to other uploaded sequences:</p>
 <img src="../results/blast3.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
-<p>In this case, we can see that our longest read maps near-perfectly to a portion of an <a href="https://www.ncbi.nlm.nih.gov/nuccore/CP000235.1">Anaplasma phagocytophilum reference genome</a>, a Gram-negative bacterium that causes multiple diseases in cattle and sheep, as well as zoonoses like <a href="https://www.ncbi.nlm.nih.gov/books/NBK513341/">human granulocytic anaplasmosis.</a></p>
+<h3 id="conclusion">Conclusion<a aria-label="Link to this section" class="paige-header-link" href="#conclusion"></a></h3>
+<p>In this case, we can see that our longest read maps near-perfectly to a portion of an <a href="https://www.ncbi.nlm.nih.gov/nuccore/CP000235.1">Anaplasma phagocytophilum reference genome</a>, a Gram-negative bacterium that causes multiple diseases in cattle and sheep, as well as zoonoses like <a href="https://www.ncbi.nlm.nih.gov/books/NBK513341/">human granulocytic anaplasmosis.</a> This result is consistent to those of Kip et. al 2023, which found evidence of the same bacteria in their approach that used the <a href="https://github.com/DerrickWood/kraken2">kraken2</a> package for metagenomic classification.</p>
 <br>
 <hr>
 <h1 id="real-time-example">Real-Time Example<a aria-label="Link to this section" class="paige-header-link" href="#real-time-example"></a></h1>
@@ -1041,7 +1042,7 @@ This section contains all of the code we will use to analyze the Nanopore sequen
 <h2> Depletion of host genomes for bacterial and fungal pathogen identification  </h2>
 <h2 id="1-basecalling">1. Basecalling<a aria-label="Link to this section" class="paige-header-link" href="#1-basecalling"></a></h2>
 <p><strong>Description:</strong>
-Basecalling is the process of determining the sequence of nucleotide bases from the raw data generated by the sequencer. For Nanopore sequencing, basecalling involves interpreting changes in electral current as single-stranded DNA (or RNA) passes through the nanopore. Current fluctuations correspond to different nucleotide bases which are decoded into <span style="color: #ff0000;">A&rsquo;s</span>,
+Basecalling is the process of determining the sequence of nucleotide bases from the raw data generated by the sequencer. For Nanopore sequencing, basecalling involves interpreting changes in electral current as single-stranded DNA (or RNA) passes through the Nanopore. Current fluctuations correspond to different nucleotide bases which are decoded into <span style="color: #ff0000;">A&rsquo;s</span>,
 <span style="color: #00ff00;">G&rsquo;s</span>,
 <span style="color: #0000ff;">T&rsquo;s</span>,
 and <span style="color: #ffa500;">C&rsquo;s</span> by the dorado basecalling software.</p>
@@ -1233,7 +1234,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
   <h2>Molecular species ID through mitochondrial genome enrichment </h2>
 <h2 id="1-basecalling-1">1. Basecalling<a aria-label="Link to this section" class="paige-header-link" href="#1-basecalling-1"></a></h2>
 <p><strong>Description:</strong>
-Basecalling is the process of determining the sequence of nucleotide bases from the raw data generated by the sequencer. For Nanopore sequencing, basecalling involves interpreting changes in electral current as single-stranded DNA (or RNA) passes through the nanopore. Current fluctuations correspond to different nucleotide bases which are decoded into <span style="color: #ff0000;">A&rsquo;s</span>,
+Basecalling is the process of determining the sequence of nucleotide bases from the raw data generated by the sequencer. For Nanopore sequencing, basecalling involves interpreting changes in electral current as single-stranded DNA (or RNA) passes through the Nanopore. Current fluctuations correspond to different nucleotide bases which are decoded into <span style="color: #ff0000;">A&rsquo;s</span>,
 <span style="color: #00ff00;">G&rsquo;s</span>,
 <span style="color: #0000ff;">T&rsquo;s</span>,
 and <span style="color: #ffa500;">C&rsquo;s</span> by the dorado basecalling software.</p>
@@ -1312,7 +1313,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 <br>
 </div>
 <h2 id="3-align-your-mitochondrial-genomes-using-dorado">3. Align your mitochondrial genomes using Dorado<a aria-label="Link to this section" class="paige-header-link" href="#3-align-your-mitochondrial-genomes-using-dorado"></a></h2>
-<p><strong>Desription</strong>: The dorado package is a suite of tools tailored for working with long read, nanopore sequence data. This is the aligning function in nanopore in which we provide a reference genome or an idea of what the genome should look like. The reads are then aligned to that reference to create a file for each individual&rsquo;s reads.</p>
+<p><strong>Desription</strong>: The dorado package is a suite of tools tailored for working with long read, Nanopore sequence data. This is the aligning function in Nanopore in which we provide a reference genome or an idea of what the genome should look like. The reads are then aligned to that reference to create a file for each individual&rsquo;s reads.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="cp">#!/bin/bash
 </span></span></span><span class="line"><span class="cl"><span class="cp"></span><span class="c1"># Base directory for output</span>
 </span></span><span class="line"><span class="cl">
@@ -1347,7 +1348,7 @@ For more details on decoding dorado model names see <a href="https://github.com/
 </span></span><span class="line"><span class="cl"><span class="c1">#-min-MQ minimum mapping quality</span>
 </span></span><span class="line"><span class="cl"><span class="c1">#-min-BQ minimum base quality</span>
 </span></span><span class="line"><span class="cl"><span class="k">done</span></span></span></code></pre></div>
-<h2 id="4-converting-our-consensus-sequence-into-a-format-for-alingment">4. Converting our consensus sequence into a format for alingment<a aria-label="Link to this section" class="paige-header-link" href="#4-converting-our-consensus-sequence-into-a-format-for-alingment"></a></h2>
+<h2 id="4-converting-our-consensus-sequence-into-a-format-for-alignment">4. Converting our consensus sequence into a format for alignment<a aria-label="Link to this section" class="paige-header-link" href="#4-converting-our-consensus-sequence-into-a-format-for-alignment"></a></h2>
 <p><strong>Description</strong>:
 Rename the header in each fasta file by the name of the fasta file</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># Loop through a series of barcode numbers from 01 to 24</span>
@@ -1368,9 +1369,11 @@ Rename the header in each fasta file by the name of the fasta file</p>
 <br>
 <p>Here, we imported <code>concatanated.fasta</code> into the MEGA Alignment explorer. Each barcode is a row and in that row are all of the nucleotide bases in order, alinged to eachother. Each base is a different color, with N&rsquo;s representing bases of unknown identity.</p>
 <img src="../results/mega1.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
-<p>It&rsquo;s easy to see here that the mitochondrial genomes match each other near perfectly, but how does each sequence relate to the rest? For that answer, we can use the MEGA tree explorer on the same file. It will deisplay the same sequences, but group them as a tree, with individuals with more similar sequences being placed closer to eachother on the tree.</p>
+<div style="margin-top: 20px;">
+    It can be seen here that the mitochondrial genomes match each other near perfectly, but how does each sequence relate to the rest? For that answer, we can use the MEGA tree explorer on the same file. It will display the same sequences, but group them as a tree, with individuals with more similar sequences being placed closer to each other on the tree.
+</div>
 <br>
-<img src="../results/mega2.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 0 auto;"/>
+<img src="../results/mega2.jpg" alt="Alignment Process" style="max-width: 100%; height: auto; display: block; margin: 20px auto;"/>
 </main>
         
 
